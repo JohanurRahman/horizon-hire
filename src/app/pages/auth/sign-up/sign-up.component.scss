@@ -1,0 +1,21 @@
+.sign-up-container {
+  background-color: #fff;
+  max-width: 380px;
+  border-radius: 10px;
+  padding: 40px 40px 20px 40px;
+
+  &__header-info {
+    .title {
+      @apply text-2xl font-medium;
+    }
+  }
+
+  &__button {
+    @apply w-full text-white h-45 rounded-md bg-blue text-base font-medium;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
