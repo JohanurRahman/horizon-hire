@@ -19,7 +19,7 @@ export class SignInComponent implements OnDestroy {
 
   submitting = false;
 
-  loginForm = new FormGroup({
+  signInForm = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, Validators.required)
   });
@@ -32,13 +32,13 @@ export class SignInComponent implements OnDestroy {
   }
 
   submit() {
-    if (this.loginForm.invalid) {
+    if (this.signInForm.invalid) {
       return;
     }
 
     this.submitting = true;
 
-    const { email, password } = this.loginForm.value;
+    const { email, password } = this.signInForm.value;
     this.authService.login(email, password).pipe(
       this.toast.observe({
         success: 'Logged in successfully',

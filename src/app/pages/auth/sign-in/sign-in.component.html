@@ -7,16 +7,16 @@
   </div>
 
 
-  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+  <form [formGroup]="signInForm" (ngSubmit)="submit()">
     <mat-form-field appearance="outline" class="w-full" >
       <mat-label>Email</mat-label>
       <input matInput type="text" formControlName="email" appDisableControl [disableControl]="submitting">
       <mat-icon matSuffix>alternate_email</mat-icon>
 
-      <mat-error *ngIf="loginForm.controls['email']?.errors?.['required']" >
+      <mat-error *ngIf="signInForm.controls['email']?.errors?.['required']" >
         Email address is required
       </mat-error>
-      <mat-error *ngIf="loginForm.controls['email']?.errors?.['email']">
+      <mat-error *ngIf="signInForm.controls['email']?.errors?.['email']">
         Please enter a valid email address
       </mat-error>
     </mat-form-field>
@@ -26,7 +26,7 @@
       <input matInput type="password" formControlName="password" appDisableControl [disableControl]="submitting">
       <mat-icon matSuffix>lock_outlined</mat-icon>
 
-      <mat-error *ngIf="loginForm.controls['password']?.errors?.['required']">
+      <mat-error *ngIf="signInForm.controls['password']?.errors?.['required']">
         Password is required
       </mat-error>
     </mat-form-field>
