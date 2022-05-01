@@ -11,6 +11,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
 import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    DisableControlModule
   ]
 })
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-personal-info-edit',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalInfoEditComponent implements OnInit {
 
-  constructor() { }
+  personalInfoForm: FormGroup;
+
+  submitting = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<PersonalInfoEditComponent>
+  ) { }
 
   ngOnInit(): void {
+    this.personalInfoForm = this.fb.group({
+      firstName: [ null, Validators.required],
+      lastname: [ null, Validators.required],
+      title: [ null ],
+      age: [ null, Validators.required]
+    })
+
+    this.dialogRef.disableClose = true;
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

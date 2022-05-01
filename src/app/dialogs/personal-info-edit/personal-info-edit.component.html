@@ -2,16 +2,57 @@
   <h2 class="title">
     Personal Information
   </h2>
-  <button class="action">
+  <button class="action" (click)="closeDialog()">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<div mat-dialog-content class="dialog__content" cdkScrollable>
-  <p>Content Goes here</p>
+<div mat-dialog-content cdkScrollable>
+
+  <form [formGroup]="personalInfoForm">
+    <mat-form-field appearance="outline" class="w-full mb-1">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" formControlName="firstName"
+             appDisableControl [disableControl]="submitting">
+
+      <mat-error *ngIf="personalInfoForm.controls['firstName']?.errors?.['required']" >
+        First name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" formControlName="lastName"
+             appDisableControl [disableControl]="submitting">
+
+      <mat-error *ngIf="personalInfoForm.controls['lastName']?.errors?.['required']" >
+        Last name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" formControlName="title"
+             appDisableControl [disableControl]="submitting">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Age</mat-label>
+      <input matInput type="text" formControlName="age"
+             appDisableControl [disableControl]="submitting">
+
+      <mat-error *ngIf="personalInfoForm.controls['age']?.errors?.['required']" >
+        Age is required
+      </mat-error>
+    </mat-form-field>
+
+
+
+  </form>
+
 </div>
 
-<div mat-dialog-actions class="dialog__footer">
-  <button class="button button-secondary">Cancel</button>
+<div mat-dialog-actions>
+  <button class="button button-secondary" (click)="closeDialog()">Cancel</button>
   <button class="button button-primary ml-5">Save</button>
 </div>

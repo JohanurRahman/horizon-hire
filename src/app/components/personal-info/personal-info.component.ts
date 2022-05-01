@@ -18,7 +18,7 @@ export class PersonalInfoComponent implements OnInit {
 
   openDialog() {
     this.personalInfoEditDialogRef = this.dialog.open(PersonalInfoEditComponent, {
-      width: '800px',
+      width: '500px',
       panelClass: 'dialog-edit',
       disableClose: false
     });
