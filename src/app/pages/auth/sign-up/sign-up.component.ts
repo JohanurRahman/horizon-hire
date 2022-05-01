@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { HotToastService } from '@ngneat/hot-toast';
+import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,6 +15,10 @@ import { HotToastService } from '@ngneat/hot-toast';
 
 export class SignUpComponent {
 
+  private destroy$ = new Subject<void>();
+
+  submitting = false;
+
   signUpForm = new FormGroup({
     firstName: new FormControl(null, Validators.required),
     lastName: new FormControl(null, Validators.required),
@@ -19,11 +26,12 @@ export class SignUpComponent {
     password: new FormControl(null, [Validators.required, Validators.minLength(6)])
   });
 
-  submitting = false;
 
   constructor(
     private router: Router,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private authService: AuthService,
+    private userService: UserService,
   ) {
   }
 
@@ -33,8 +41,28 @@ export class SignUpComponent {
     }
 
     this.submitting = true;
-    const formData = this.signUpForm.value;
-    console.log('FORM DATA: ', formData);
+
+    const { firstName, lastName, email, password } = this.signUpForm.value;
+
+    this.authService.signUp(email, password).pipe(
+      this.toast.observe({
+        success: 'Congrats! You are all signed up',
+        loading: 'Signing up...',
+        error: ({ message }) => `${message}`,
+      }),
+      switchMap(({ user: { uid }}) => {
+          return this.userService.addUser({ uid, email, firstName, lastName })
+      }),
+      tap({
+        next: (res) => {
+          this.router.navigate(['/profile']);
+        },
+        error: () => {
+          this.submitting = false;
+        }
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
   }
 
   navigateToSignIn() {
