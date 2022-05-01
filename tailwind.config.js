@@ -16,7 +16,8 @@ module.exports = {
         'grey': '#525f7f'
       },
       maxWidth: {
-        '380': '380px'
+        '380': '380px',
+        '1250px': '1250px'
       }
     }
   },

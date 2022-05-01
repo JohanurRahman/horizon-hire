@@ -1,0 +1,22 @@
+<mat-toolbar class="bg-white">
+
+  <div class="max-w-[1250px] w-full my-0 mx-auto flex justify-between">
+    <h1 class="title">Horizon Hire</h1>
+    <button class="flex items-center" [matMenuTriggerFor]="userMenu">
+      <img class="profile-image-toolbar"
+        src="../../../assets/images/profile/user-avatar.png"
+      />
+        <span class="text-base">{{ 'Johanur Rahman' }}</span>
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<mat-menu #userMenu="matMenu" xPosition="before">
+  <button mat-menu-item >
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-menu>
+
