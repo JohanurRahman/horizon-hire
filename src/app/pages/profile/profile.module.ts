@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
+import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DisableControlModule } from '../../directives/disable-control/disable-c
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    DisableControlModule
+    DisableControlModule,
+    NumbersOnlyModule
   ]
 })
 
