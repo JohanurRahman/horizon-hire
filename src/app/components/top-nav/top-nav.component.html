@@ -4,9 +4,12 @@
     <h1 class="title">Horizon Hire</h1>
     <button class="flex items-center" [matMenuTriggerFor]="userMenu">
       <img class="profile-image-toolbar"
-        src="../../../assets/images/profile/user-avatar.png"
-      />
-        <span class="text-base">{{ 'Johanur Rahman' }}</span>
+           src="../../../assets/images/profile/user-avatar.png"/>
+
+      <span class="text-base" *ngIf="userInfo">
+          {{ userInfo.firstName }} {{ userInfo.lastName }}
+        </span>
+
       <mat-icon>expand_more</mat-icon>
     </button>
   </div>
