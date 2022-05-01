@@ -39,7 +39,7 @@ export class SignInComponent implements OnDestroy {
     this.submitting = true;
 
     const { email, password } = this.signInForm.value;
-    this.authService.login(email, password).pipe(
+    this.authService.signIn(email, password).pipe(
       this.toast.observe({
         success: 'Logged in successfully',
         loading: 'Logging in...',
@@ -47,7 +47,7 @@ export class SignInComponent implements OnDestroy {
       }),
       tap({
         next: () => {
-          // Navigate to profile
+          this.router.navigate(['/profile']);
         },
         error: () => {
           this.submitting = false;
