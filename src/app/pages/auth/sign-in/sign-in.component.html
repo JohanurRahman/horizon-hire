@@ -10,7 +10,8 @@
   <form [formGroup]="signInForm" (ngSubmit)="submit()">
     <mat-form-field appearance="outline" class="w-full" >
       <mat-label>Email</mat-label>
-      <input matInput type="text" formControlName="email" appDisableControl [disableControl]="submitting">
+      <input matInput type="text" formControlName="email"
+             appDisableControl [disableControl]="submitting">
       <mat-icon matSuffix>alternate_email</mat-icon>
 
       <mat-error *ngIf="signInForm.controls['email']?.errors?.['required']" >
@@ -23,7 +24,8 @@
 
     <mat-form-field appearance="outline" class="w-full mb-5">
       <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password" appDisableControl [disableControl]="submitting">
+      <input matInput type="password" formControlName="password"
+             appDisableControl [disableControl]="submitting">
       <mat-icon matSuffix>lock_outlined</mat-icon>
 
       <mat-error *ngIf="signInForm.controls['password']?.errors?.['required']">
@@ -39,7 +41,7 @@
 
   <div class="text-center mt-70">
     <span class="text-slate-500 text-xs mr-2.5">Don't have an account?</span>
-    <a class="text-orange no-underline font-medium cursor-pointer" (click)="navigateToRegister()">Sign Up</a>
+    <a class="text-orange no-underline font-medium cursor-pointer" (click)="navigateToSignUp()">Sign Up</a>
   </div>
 
 </div>

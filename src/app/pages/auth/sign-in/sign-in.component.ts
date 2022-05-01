@@ -57,7 +57,7 @@ export class SignInComponent implements OnDestroy {
     ).subscribe();
   }
 
-  navigateToRegister() {
+  navigateToSignUp() {
     this.router.navigate(['/auth/sign-up']);
   }
 
