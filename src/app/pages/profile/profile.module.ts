@@ -9,12 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { TopNavComponent } from '../../components/top-nav/top-nav.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
+import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     TopNavComponent,
-    PersonalInfoComponent
+    PersonalInfoComponent,
+    PersonalInfoEditComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { PersonalInfoComponent } from '../../components/personal-info/personal-i
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ]
 })
 

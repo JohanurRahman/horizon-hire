@@ -17,12 +17,12 @@
     </div>
   </div>
 
-  <div>
-    <button matTooltip="Edit personal information" class="mr-3" style="color: #575763">
+  <div class="personal-info-actions">
+    <button matTooltip="Edit personal information" class="mr-3" (click)="openDialog()">
       <mat-icon>edit</mat-icon>
     </button>
 
-    <button matTooltip="Share profile" style="color: #575763">
+    <button matTooltip="Share profile">
       <mat-icon>share</mat-icon>
     </button>
   </div>
