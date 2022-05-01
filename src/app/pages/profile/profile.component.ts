@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '@models';
 import { HotToastService } from '@ngneat/hot-toast';
+import { filter, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   userInfo: User;
 
@@ -24,13 +27,19 @@ export class ProfileComponent implements OnInit {
         loading: 'Loading user information',
         error: ({ message }) => `${message}`
       }),
-    ).subscribe((user) => {
-      if (!user) {
-        throw new Error('No user found');
-      }
+      filter(user => user !== null),
+      tap((user: User | null) => {
+        if (!user) {
+          throw new Error('No user found');
+        }
+        this.userInfo = user;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
 
-      this.userInfo = user;
-    });
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 
 }
