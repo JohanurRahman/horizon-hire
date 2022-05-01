@@ -30,7 +30,6 @@ export class ProfileComponent implements OnInit {
       }
 
       this.userInfo = user;
-      console.log('USERS: ', user);
     });
   }
 

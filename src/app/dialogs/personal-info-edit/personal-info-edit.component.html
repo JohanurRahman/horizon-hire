@@ -7,39 +7,40 @@
   </button>
 </div>
 
-<div mat-dialog-content cdkScrollable>
+<form [formGroup]="personalInfoForm" (ngSubmit)="submit()">
 
-  <div class="user-photo ,b">
-    <img src="../../../assets/images/profile/user-avatar.png" alt=""/>
-    <button mat-mini-fab (click)="inputField.click()">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </div>
-  <input #inputField hidden type="file" />
+  <div mat-dialog-content cdkScrollable>
 
-  <form [formGroup]="personalInfoForm">
+    <div class="user-photo">
+      <img src="/assets/images/profile/user-avatar.png" alt=""/>
+      <button type="button" mat-mini-fab (click)="inputField.click()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <input #inputField hidden type="file" />
 
     <mat-form-field appearance="outline" class="w-full mb-1">
       <mat-label>First Name</mat-label>
       <input matInput type="text" formControlName="firstName"
              appDisableControl [disableControl]="submitting">
 
-      <mat-error *ngIf="personalInfoForm.controls['firstName']?.errors?.['required']" >
+      <mat-error *ngIf="personalInfoForm.controls['firstName'].invalid" >
         First name is required
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full">
+    <mat-form-field appearance="outline" class="w-full mb-1">
       <mat-label>Last Name</mat-label>
       <input matInput type="text" formControlName="lastName"
              appDisableControl [disableControl]="submitting">
 
-      <mat-error *ngIf="personalInfoForm.controls['lastName']?.errors?.['required']" >
+      <mat-error *ngIf="personalInfoForm.controls['lastName'].invalid" >
         Last name is required
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-full">
+    <mat-form-field appearance="outline" class="w-full mb-1">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title"
              appDisableControl [disableControl]="submitting">
@@ -50,18 +51,15 @@
       <input matInput type="text" formControlName="age"
              appDisableControl [disableControl]="submitting">
 
-      <mat-error *ngIf="personalInfoForm.controls['age']?.errors?.['required']" >
+      <mat-error *ngIf="personalInfoForm.controls['age'].invalid" >
         Age is required
       </mat-error>
     </mat-form-field>
+  </div>
 
+  <div mat-dialog-actions>
+    <button type="button" class="button button-secondary" (click)="closeDialog()">Cancel</button>
+    <button type="submit" class="button button-primary ml-5">Save</button>
+  </div>
 
-
-  </form>
-
-</div>
-
-<div mat-dialog-actions>
-  <button class="button button-secondary" (click)="closeDialog()">Cancel</button>
-  <button class="button button-primary ml-5">Save</button>
-</div>
+</form>
