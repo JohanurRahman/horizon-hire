@@ -1,1 +1,35 @@
-<p>profile works!</p>
+<mat-toolbar  style="justify-content: space-between; background-color: #fff; color: black" >
+  <div style="max-width: 1250px; width: 100%; margin: 0 auto; display: flex; justify-content: space-between">
+    <h1 style="font-size: 26px; fon">Horizon Hire</h1>
+    <button [matMenuTriggerFor]="userMenu" style="display: flex; align-items: center">
+      <img
+        class="profile-image-toolbar"
+        src="../../../assets/images/profile/user-avatar.png"
+      />
+      <span style="font-size: 16px">{{ 'Johanur Rahman' }}</span>
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item routerLink="/profile">
+    <mat-icon>account_circle</mat-icon>
+    Profile
+  </button>
+  <button mat-menu-item >
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</mat-menu>
+
+
+<div class="page-wrraper" style="padding-top: 3.5rem;">
+  <div style="max-width: 1250px; margin: 0 auto">
+
+    <div class="mat-elevation-z8">
+      <h1>Basic Info goes here</h1>
+    </div>
+
+  </div>
+</div>
