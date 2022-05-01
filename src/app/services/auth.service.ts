@@ -20,5 +20,9 @@ export class AuthService {
     return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
+  logout(): Observable<void> {
+    return from(this.auth.signOut());
+  }
+
 }
 
