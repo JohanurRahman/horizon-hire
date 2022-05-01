@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'src/styles/button.scss';
+@import 'src/styles/dialog.scss';
+
 html, body {
   height: 100%;
   background-color: rgb(247, 248, 252);
