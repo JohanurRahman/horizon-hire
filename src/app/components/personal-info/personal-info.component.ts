@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
+import { User } from '@models';
 
 @Component({
   selector: 'app-personal-info',
@@ -8,6 +9,8 @@ import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/pers
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit {
+
+  @Input() userInfo: User;
 
   personalInfoEditDialogRef: MatDialogRef<PersonalInfoEditComponent>;
 

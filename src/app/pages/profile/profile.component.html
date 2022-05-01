@@ -3,7 +3,9 @@
 <div class="page-wrapper">
   <div class="wrapper">
 
-    <app-personal-info></app-personal-info>
+    <ng-container *ngIf="userInfo">
+      <app-personal-info [userInfo]="userInfo"></app-personal-info>
+    </ng-container>
 
   </div>
 </div>

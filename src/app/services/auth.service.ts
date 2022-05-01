@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { UserCredential } from '@firebase/auth';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { UserCredential } from '@firebase/auth';
 })
 
 export class AuthService {
+
+  currentUser$ = authState(this.auth);
 
   constructor(private auth: Auth) {}
 
