@@ -20,6 +20,9 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
+    "paths": {
+      "@models": ["src/app/models/index.ts"],
+    },
     "lib": [
       "es2020",
       "dom"
