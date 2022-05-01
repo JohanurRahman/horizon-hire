@@ -5,7 +5,8 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        '45': '45px'
+        '45': '45px',
+        '130': '130px',
       },
       margin: {
         '70': '70px'
@@ -16,8 +17,10 @@ module.exports = {
         'grey': '#525f7f'
       },
       maxWidth: {
-        '380': '380px',
-        '1250px': '1250px'
+        '380': '380px'
+      },
+      width: {
+        '130': '130px'
       }
     }
   },

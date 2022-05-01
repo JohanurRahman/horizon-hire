@@ -7,11 +7,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TopNavComponent } from '../../components/top-nav/top-nav.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    TopNavComponent
+    TopNavComponent,
+    PersonalInfoComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,8 @@ import { TopNavComponent } from '../../components/top-nav/top-nav.component';
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ]
 })
 
