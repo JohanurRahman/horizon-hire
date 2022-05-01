@@ -15,6 +15,14 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.card {
+  background: #fff;
+  border: 1px solid #dde0e5;
+  box-shadow: 0 2px 20px rgb(212 216 232 / 52%);
+  padding: 30px;
+  border-radius: 4px;
+}
+
 .center-content {
   position: absolute;
   left: 50%;

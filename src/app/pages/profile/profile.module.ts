@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
 import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.mo
     MatInputModule,
     ReactiveFormsModule,
     DisableControlModule,
-    NumbersOnlyModule
+    NumbersOnlyModule,
+    MatSlideToggleModule
   ]
 })
 
