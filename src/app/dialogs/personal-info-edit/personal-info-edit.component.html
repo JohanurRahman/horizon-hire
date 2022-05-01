@@ -9,7 +9,16 @@
 
 <div mat-dialog-content cdkScrollable>
 
+  <div class="user-photo ,b">
+    <img src="../../../assets/images/profile/user-avatar.png" alt=""/>
+    <button mat-mini-fab (click)="inputField.click()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+  <input #inputField hidden type="file" />
+
   <form [formGroup]="personalInfoForm">
+
     <mat-form-field appearance="outline" class="w-full mb-1">
       <mat-label>First Name</mat-label>
       <input matInput type="text" formControlName="firstName"
