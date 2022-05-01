@@ -1,0 +1,25 @@
+.login-container {
+  background-color: #fff;
+  max-width: 380px;
+  border-radius: 10px;
+  padding: 40px 40px 20px 40px;
+
+  &__header-info {
+    .logo {
+      @apply text-3xl mb-7;
+    }
+
+    .title {
+      @apply text-4xl	font-medium mb-5;
+    }
+  }
+
+  &__button {
+    @apply w-full text-white h-45 rounded-md bg-blue text-base font-medium;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}

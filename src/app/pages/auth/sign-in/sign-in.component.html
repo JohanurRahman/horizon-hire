@@ -1,1 +1,45 @@
-<p>sign-in works!</p>
+<div class="center-content login-container mat-elevation-z2">
+
+  <div class="login-container__header-info text-center mb-12">
+    <p class="logo">👋</p>
+    <h1 class="title">Horizon Hire</h1>
+    <p class="text-slate-500">Let's bring job offers to you</p>
+  </div>
+
+
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="w-full" >
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="email" appDisableControl [disableControl]="submitting">
+      <mat-icon matSuffix>alternate_email</mat-icon>
+
+      <mat-error *ngIf="loginForm.controls['email']?.errors?.['required']" >
+        Email address is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['email']?.errors?.['email']">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full mb-5">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" appDisableControl [disableControl]="submitting">
+      <mat-icon matSuffix>lock_outlined</mat-icon>
+
+      <mat-error *ngIf="loginForm.controls['password']?.errors?.['required']">
+        Password is required
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit" class="login-container__button" [disabled]="submitting">
+      Sign In
+    </button>
+  </form>
+
+
+  <div class="text-center mt-70">
+    <span class="text-slate-500 text-xs mr-2.5">Don't have an account?</span>
+    <a class="text-orange no-underline font-medium cursor-pointer" (click)="navigateToRegister()">Sign Up</a>
+  </div>
+
+</div>
