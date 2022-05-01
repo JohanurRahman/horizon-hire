@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '@models';
 import { UserService } from '../../services/user.service';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { ImageUploadService } from '../../services/image-upload.service';
 
 @Component({
   selector: 'app-personal-info-edit',
@@ -19,10 +20,13 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  imgURL: any;
+
   constructor(
     private fb: FormBuilder,
     private toast: HotToastService,
     private userService: UserService,
+    private imageUploadService: ImageUploadService,
     private dialogRef: MatDialogRef<PersonalInfoEditComponent>,
     @Inject(MAT_DIALOG_DATA) private data: User,
   ) { }
@@ -71,4 +75,44 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
   }
 
 
+  uploadImage(event) {
+    // const files: FileList = event.target.files;
+    //
+    // if (files.length === 0) {
+    //   return;
+    // }
+    //
+    // const isValidImage = this.validateImageFile(files[0].type);
+    //
+    // if (isValidImage) {
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(files[0]);
+    //   reader.onload = () => this.imgURL = reader.result;
+    // }
+
+    this.imageUploadService
+      .uploadImage(event.target.files[0], `images/profile/${this.data.uid}`)
+      .pipe(
+        this.toast.observe({
+          loading: 'Uploading profile image...',
+          success: 'Image uploaded successfully',
+          error: 'There was an error in uploading the image',
+        }),
+        switchMap((photoURL) => {
+          const data = { uid: this.data.uid, photoURL };
+          return this.userService.updateUser(data);
+        })
+      )
+      .subscribe();
+  }
+
+  validateImageFile(fileType) {
+    const pattern = /image\/*/;
+
+    if (!fileType.match(pattern)) {
+      this.toast.info('Must be an image');
+      return false;
+    }
+    return true;
+  }
 }

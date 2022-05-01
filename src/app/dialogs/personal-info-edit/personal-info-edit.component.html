@@ -12,13 +12,13 @@
   <div mat-dialog-content cdkScrollable>
 
     <div class="user-photo">
-      <img src="/assets/images/profile/user-avatar.png" alt=""/>
+      <img [src]="imgURL ?? '/assets/images/profile/user-avatar.png'" alt=""/>
       <button type="button" mat-mini-fab (click)="inputField.click()">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
 
-    <input #inputField hidden type="file" />
+    <input #inputField hidden type="file" (change)="uploadImage($event)"/>
 
     <mat-form-field appearance="outline" class="w-full mb-1">
       <mat-label>First Name</mat-label>
