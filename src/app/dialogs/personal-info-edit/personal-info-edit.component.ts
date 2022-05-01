@@ -21,7 +21,7 @@ export class PersonalInfoEditComponent implements OnInit {
   ngOnInit(): void {
     this.personalInfoForm = this.fb.group({
       firstName: [ null, Validators.required],
-      lastname: [ null, Validators.required],
+      lastName: [ null, Validators.required],
       title: [ null ],
       age: [ null, Validators.required]
     })
