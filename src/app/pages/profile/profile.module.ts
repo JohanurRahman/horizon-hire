@@ -1,29 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from './profile.component';
-import { ProfileRoutingModule } from './profile-routing.module';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TopNavComponent } from '../../components/top-nav/top-nav.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.module';
+import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
+
+import { ProfileRoutingModule } from './profile-routing.module';
+
+import { ProfileComponent } from './profile.component';
+import { TopNavComponent } from '../../components/top-nav/top-nav.component';
 import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
 import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
-import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.module';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
+import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     TopNavComponent,
     PersonalInfoComponent,
-    PersonalInfoEditComponent
+    PersonalInfoEditComponent,
+    WorkExperienceComponent,
+    ProfilePrivacyComponent
   ],
   imports: [
     CommonModule,
