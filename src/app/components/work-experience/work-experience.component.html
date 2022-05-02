@@ -1,48 +1,29 @@
 <div class="card">
-  <div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px">
-    <h4 style="font-size: 28px; font-weight: 500; margin-bottom: 0; color: #25252A">Experience</h4>
-    <button class="button button-secondary" style="" (click)="openDialog()">Add</button>
+
+  <div class="card__header">
+    <h4>Experience</h4>
+    <button class="button button-secondary" (click)="openDialog()">
+      Add
+    </button>
   </div>
 
-  <div class="content">
-
+  <div class="card__content">
     <ng-container *ngIf="userInfo.workExperiences">
-      <div class="experience-entry" *ngFor="let item of userInfo.workExperiences"
-           style="padding: 20px 0; border-top: 1px solid #e9eef5; display: grid; grid-template-columns: 65px 1fr; grid-column-gap: 20px">
+      <div class="experience-entry-container" *ngFor="let item of userInfo.workExperiences">
 
-        <img [src]="item.companyLogo ?? '/assets/images/company/company.png'" alt=""
-             style="background-color: #f9f9fb;border: thin solid #dae3ed;border-radius: 50%; height: 65px; width: 65px;">
+        <img class="company-logo" [src]="item.companyLogo ?? '/assets/images/company/company.png'" [alt]="item.companyName">
 
         <div>
-          <p style="margin-bottom: 4px; color: rgb(94, 89, 94); font-size: 16px; font-weight: 500; line-height: 24px;">
-            {{ item.title }}
-          </p>
-          <p style="margin-bottom: 4px; color: rgb(151, 151, 151); font-size: 14px; line-height: 18px;">
-            {{ item.companyName }}
-          </p>
-          <p style="margin-bottom: 15px; color: rgb(151, 151, 151); font-size: 14px; line-height: 18px;">
+          <p class="title"> {{ item.title }} </p>
+          <p class="company-name"> {{ item.companyName }} </p>
+          <p class="duration" style="">
             {{ item.startDate }} - {{ item.current ? 'Present' :  item.endDate }}
           </p>
-
-
-          <p style="color: rgb(94, 89, 94); font-size: 16px; font-weight: 400; text-align: justify">
-
-            {{ item.description }}
-<!--            BrainStation23, a globally leading one of the best software development companies in Bangladesh-->
-
-<!--            - Responsible for designing and developing various features using Angular framework.-->
-<!--            - Analyze client's requirements and designed and developed features according to requirements-->
-<!--            - Clearly and regularly communicate with client and colleagues to ensure efficient solution-->
-<!--            - Test, maintained and recommend improvements to ensure strong functionality and optimization-->
-          </p>
+          <p class="description"> {{ item.description }} </p>
         </div>
-
 
       </div>
     </ng-container>
-
-
-
   </div>
 
 </div>

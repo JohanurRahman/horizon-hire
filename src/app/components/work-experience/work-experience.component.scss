@@ -1,0 +1,46 @@
+
+
+.experience-entry-container {
+  padding: 20px 0;
+  border-top: 1px solid #e9eef5;
+  display: grid;
+  grid-template-columns: 65px 1fr;
+  grid-column-gap: 20px;
+
+  .company-logo {
+    height: 65px;
+    width: 65px;
+    background-color: #f9f9fb;
+    border: thin solid #dae3ed;
+    border-radius: 50%;
+  }
+
+  .title {
+    margin-bottom: 4px;
+    color: rgb(94, 89, 94);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .company-name, .duration {
+    color: rgb(151, 151, 151);
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .company-name {
+    margin-bottom: 4px;
+  }
+
+  .duration {
+    margin-bottom: 15px;
+  }
+
+  .description {
+    color: rgb(94, 89, 94);
+    font-size: 16px;
+    font-weight: 400;
+    text-align: justify;
+  }
+}

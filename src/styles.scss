@@ -21,6 +21,20 @@ body {
   box-shadow: 0 2px 20px rgb(212 216 232 / 52%);
   padding: 30px;
   border-radius: 4px;
+
+  .card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    & > h4 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 0;
+      color: #25252A;
+    }
+  }
 }
 
 .center-content {
