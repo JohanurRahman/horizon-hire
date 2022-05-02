@@ -24,6 +24,9 @@ import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/pers
 import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
 import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
 import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/
     ReactiveFormsModule,
     DisableControlModule,
     NumbersOnlyModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ]
 })
 

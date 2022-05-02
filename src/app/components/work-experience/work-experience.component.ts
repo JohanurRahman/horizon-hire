@@ -19,7 +19,7 @@ export class WorkExperienceComponent implements OnInit {
 
   openDialog() {
     this.workExperienceEditDialogRef = this.dialog.open(WorkExperienceEditComponent, {
-      width: '800px',
+      width: '700px',
       panelClass: 'dialog-edit',
       disableClose: false
     });

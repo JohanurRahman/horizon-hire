@@ -7,13 +7,98 @@
   </button>
 </div>
 
+<form [formGroup]="workExperienceForm" (ngSubmit)="submit()">
+  <div mat-dialog-content cdkScrollable>
 
-<div mat-dialog-content cdkScrollable>
-  <h1>Content Goes here</h1>
-</div>
+    <mat-form-field appearance="outline" class="w-full mb-1">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" formControlName="title">
 
-<div mat-dialog-actions>
-  <button type="button" class="button button-secondary" (click)="closeDialog()">Cancel</button>
-  <button type="submit" class="button button-primary ml-5">Save</button>
-</div>
+      <mat-error *ngIf="workExperienceForm.controls['title'].invalid" >
+        Title is required
+      </mat-error>
+
+    </mat-form-field>
+
+    <div class="grid grid-cols-[20%_1fr] gap-x-[30px] items-center">
+
+      <div class="user-photo">
+        <img [src]="'/assets/images/profile/user-avatar.png'" alt=""/>
+        <button type="button" mat-mini-fab (click)="inputField.click()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+      <input #inputField hidden type="file"/>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-full mb-1">
+          <mat-label>Company name</mat-label>
+          <input matInput type="text" formControlName="companyName">
+
+          <mat-error *ngIf="workExperienceForm.controls['companyName'].invalid">
+            Company name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full mb-1">
+          <mat-label>Location</mat-label>
+          <input matInput type="text" formControlName="location">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-checkbox class="mb-4" (change)="onCheck($event.checked)">
+      I currently work here
+    </mat-checkbox>
+
+    <div class="flex justify-between gap-x-5">
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startDate" readonly formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate startView="multi-year"
+                        (monthSelected)="setMonthAndYear($event, startDate, 'start')">
+        </mat-datepicker>
+
+        <mat-error *ngIf="workExperienceForm.controls['startDate'].invalid" >
+          Start date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endDate" readonly formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate startView="multi-year"
+                        (monthSelected)="setMonthAndYear($event, endDate, 'end')">
+        </mat-datepicker>
+
+        <mat-error *ngIf="workExperienceForm.controls['endDate'].invalid" >
+          End date is required
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Job Description</mat-label>
+      <textarea matInput rows="4"
+                formControlName="description"
+                cdkTextareaAutosize>
+     </textarea>
+
+      <mat-error *ngIf="workExperienceForm.controls['startDate'].invalid">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button type="button" class="button button-secondary" (click)="closeDialog()">Cancel</button>
+    <button type="submit" class="button button-primary ml-5">Save</button>
+  </div>
+</form>
 

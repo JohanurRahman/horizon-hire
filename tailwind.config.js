@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       height: {
         '45': '45px',
+        '120': '120px',
         '130': '130px',
       },
       margin: {
@@ -20,6 +21,7 @@ module.exports = {
         '380': '380px'
       },
       width: {
+        '120': '120px',
         '130': '130px'
       }
     }
