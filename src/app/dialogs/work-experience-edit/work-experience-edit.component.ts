@@ -20,7 +20,8 @@ export const MY_FORMATS = {
     dateInput: 'LL',
   },
   display: {
-    dateInput: 'MMMM, YYYY'
+    dateInput: 'MMMM, YYYY',
+    monthYearLabel: 'MMM YYYY'
   },
 };
 
@@ -128,8 +129,8 @@ export class WorkExperienceEditComponent implements OnInit {
   constructFormData(formData) {
     return {
       ...formData,
-      startDate: moment(formData.startDate).format('MMMM-YYYY'),
-      endDate: formData.current ? null : moment(formData.endDate).format('MMMM-YYYY')
+      startDate: moment(formData.startDate).format('MMM YYYY'),
+      endDate: formData.current ? null : moment(formData.endDate).format('MMM YYYY')
     }
   }
 

@@ -3,6 +3,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '@models';
 import { HotToastService } from '@ngneat/hot-toast';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-profile',
@@ -41,8 +42,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         this.userInfo = {
           ...user,
-          workExperiences
+          workExperiences: workExperiences.sort((a, b) => {
+            return moment(b.startDate, 'MMM YYYY').diff(moment(a.startDate, 'MMM YYYY'))
+          })
         };
+
+        console.log('USER INFO: ', this.userInfo);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
