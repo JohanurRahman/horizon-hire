@@ -23,13 +23,13 @@
     <div class="grid grid-cols-[20%_1fr] gap-x-[30px] items-center">
 
       <div class="user-photo">
-        <img [src]="'/assets/images/profile/user-avatar.png'" alt=""/>
+        <img [src]="companyLogoUrl ?? '/assets/images/company/company.png'" alt=""/>
         <button type="button" mat-mini-fab (click)="inputField.click()">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
 
-      <input #inputField hidden type="file"/>
+      <input #inputField hidden type="file" (change)="selectCompanyLogo($event)"/>
 
       <div>
         <mat-form-field appearance="outline" class="w-full mb-1">

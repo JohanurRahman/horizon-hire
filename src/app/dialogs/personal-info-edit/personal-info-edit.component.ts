@@ -8,6 +8,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { User } from '@models';
 import { UserService } from '../../services/user.service';
 import { ImageUploadService } from '../../services/image-upload.service';
+import { validateImageFile } from '../../utils/function';
 
 @Component({
   selector: 'app-personal-info-edit',
@@ -117,7 +118,12 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const isValidImage = this.validateImageFile(files[0].type);
+    const isValidImage = validateImageFile(files[0].type);
+
+    if (!isValidImage) {
+      this.toast.info('Must be an image');
+      return;
+    }
 
     if (isValidImage) {
       this.personalInfoForm.controls['photoURL'].setValue(files[0]);
@@ -128,13 +134,4 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  validateImageFile(fileType) {
-    const pattern = /image\/*/;
-
-    if (!fileType.match(pattern)) {
-      this.toast.info('Must be an image');
-      return false;
-    }
-    return true;
-  }
 }

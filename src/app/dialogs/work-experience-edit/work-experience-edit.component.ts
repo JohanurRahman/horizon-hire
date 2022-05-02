@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { validateImageFile } from '../../utils/function';
+import { HotToastService } from '@ngneat/hot-toast';
+import { User } from '@models';
+import { ImageUploadService } from '../../services/image-upload.service';
+import { WorkExperienceService } from '../../services/work-experience.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -36,9 +41,15 @@ export class WorkExperienceEditComponent implements OnInit {
 
   workExperienceForm: FormGroup;
 
+  companyLogoUrl: string | ArrayBuffer | null;
+
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<WorkExperienceEditComponent>
+    private toast: HotToastService,
+    private imageUploadService: ImageUploadService,
+    private workExperienceService: WorkExperienceService,
+    private dialogRef: MatDialogRef<WorkExperienceEditComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any,
   ) { }
 
   ngOnInit(): void {
@@ -71,7 +82,6 @@ export class WorkExperienceEditComponent implements OnInit {
     datepicker.close();
   }
 
-
   ngOnDestroy() {
     this.destroy$.next();
   }
@@ -92,7 +102,57 @@ export class WorkExperienceEditComponent implements OnInit {
       return;
     }
 
-    console.log('DATA: ', this.workExperienceForm.value);
-    console.log('GET RAW: ', this.workExperienceForm.getRawValue());
+    const formData = this.constructFormData(this.workExperienceForm.getRawValue());
+
+    this.imageUploadService
+      .uploadImage(formData.companyLogo, `images/company/${formData.companyLogo.name}`)
+      .pipe(
+        this.toast.observe({
+          loading: 'Saving Experience',
+          success: 'Experience successfully',
+          error: 'There was an error while saving experience',
+        }),
+        switchMap((url) => {
+          console.log('URL: ', url)
+          const data = { ...formData, companyLogo: url };
+          return this.workExperienceService.addExperience(data, this.data.uid);
+        }),
+        tap(() => {
+          this.dialogRef.close();
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+  }
+
+  constructFormData(formData) {
+    return {
+      ...formData,
+      startDate: moment(formData.startDate).format('MMMM-YYYY'),
+      endDate: formData.current ? null : moment(formData.endDate).format('MMMM-YYYY')
+    }
+  }
+
+  selectCompanyLogo(event) {
+    const files: FileList = event.target.files;
+
+    if (files.length === 0) {
+      return;
+    }
+
+    const isValidImage = validateImageFile(files[0].type);
+
+    if (!isValidImage) {
+      this.toast.info('Must be an image');
+      return;
+    }
+
+    if (isValidImage) {
+      this.workExperienceForm.controls['companyLogo'].setValue(files[0]);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = () => this.companyLogoUrl = reader.result;
+    }
   }
 }
