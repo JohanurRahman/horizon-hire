@@ -11,17 +11,31 @@
     <ng-container *ngIf="userInfo.workExperiences">
       <div class="experience-entry-container" *ngFor="let item of userInfo.workExperiences">
 
-        <img class="company-logo" [src]="item.companyLogo ?? '/assets/images/company/company.png'" [alt]="item.companyName">
+        <div class="flex gap-x-[20px]">
+          <img class="company-logo" [src]="item.companyLogo ?? '/assets/images/company/company.png'" [alt]="item.companyName">
 
-        <div>
-          <p class="title"> {{ item.title }} </p>
-          <p class="company-name"> {{ item.companyName }} </p>
-          <p class="duration" style="">
-            {{ item.startDate }} - {{ item.current ? 'Present' :  item.endDate }}
-          </p>
-          <p class="description"> {{ item.description }} </p>
+          <div>
+            <p class="title"> {{ item.title }} </p>
+            <p class="company-name"> {{ item.companyName }} </p>
+            <p class="duration" style="">
+              {{ item.startDate }} - {{ item.current ? 'Present' :  item.endDate }}
+            </p>
+            <p class="description"> {{ item.description }} </p>
+          </div>
         </div>
 
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span>Edit position</span>
+          </button>
+          <button mat-menu-item (click)="openConfirmDialog(item.id)">
+            <span>Delete position</span>
+          </button>
+        </mat-menu>
       </div>
     </ng-container>
   </div>

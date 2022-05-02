@@ -27,6 +27,7 @@ import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     PersonalInfoEditComponent,
     WorkExperienceComponent,
     ProfilePrivacyComponent,
-    WorkExperienceEditComponent
+    WorkExperienceEditComponent,
+    ConfirmationComponent
   ],
   imports: [
     CommonModule,

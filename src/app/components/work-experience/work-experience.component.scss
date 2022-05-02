@@ -4,8 +4,8 @@
   padding: 20px 0;
   border-top: 1px solid #e9eef5;
   display: grid;
-  grid-template-columns: 65px 1fr;
-  grid-column-gap: 20px;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 5px;
 
   .company-logo {
     height: 65px;
@@ -13,6 +13,8 @@
     background-color: #f9f9fb;
     border: thin solid #dae3ed;
     border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .title {

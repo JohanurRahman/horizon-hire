@@ -10,6 +10,7 @@ export interface User {
 }
 
 export interface WorkExperience {
+  id: string;
   title: string;
   companyLogo?: string;
   companyName: string;
