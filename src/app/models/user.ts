@@ -6,4 +6,5 @@ export interface User {
   age?: number;
   title?: string;
   photoURL?: string;
+  workExperiences?: any;
 }

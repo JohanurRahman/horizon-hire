@@ -27,12 +27,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
         loading: 'Loading user information',
         error: ({ message }) => `${message}`
       }),
-      filter(user => user !== null),
-      tap((user: User | null) => {
+      filter(([user, workExperience]) => user !== null),
+      tap(([user, workExperience]) => {
         if (!user) {
           throw new Error('No user found');
         }
-        this.userInfo = user;
+
+        const workExperiences: any[] = [];
+
+        workExperience.forEach((doc) => {
+          workExperiences.push({ ...doc.data(), id: doc.id  })
+        })
+
+        this.userInfo = {
+          ...user,
+          workExperiences
+        };
       }),
       takeUntil(this.destroy$)
     ).subscribe();
