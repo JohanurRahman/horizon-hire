@@ -23,6 +23,7 @@ import { PersonalInfoComponent } from '../../components/personal-info/personal-i
 import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
 import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
 import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
+import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProfilePrivacyComponent } from '../../components/profile-privacy/profil
     PersonalInfoComponent,
     PersonalInfoEditComponent,
     WorkExperienceComponent,
-    ProfilePrivacyComponent
+    ProfilePrivacyComponent,
+    WorkExperienceEditComponent
   ],
   imports: [
     CommonModule,
