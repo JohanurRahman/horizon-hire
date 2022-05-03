@@ -67,7 +67,7 @@ export class WorkExperienceEditComponent implements OnInit {
         Validators.required
       ],
       description: [ experience?.description || null, Validators.required ]
-    },{ validators: dateValidator('startDate', 'endDate') })
+    },{ validators: dateValidator('startDate', 'endDate', 'currentRole') })
   }
 
   closeDialog() {
