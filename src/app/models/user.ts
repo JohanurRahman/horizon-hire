@@ -8,14 +8,3 @@ export interface User {
   photoURL?: string;
 }
 
-export interface WorkExperience {
-  id: string;
-  title: string;
-  companyLogo?: string;
-  companyName: string;
-  current: boolean;
-  description: string;
-  startDate: string;
-  endDate: string;
-  location?: string;
-}

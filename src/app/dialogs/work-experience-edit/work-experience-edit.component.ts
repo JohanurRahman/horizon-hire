@@ -57,7 +57,7 @@ export class WorkExperienceEditComponent implements OnInit {
       companyLogo: [ experience?.companyLogo || null ],
       companyName: [ experience?.companyName || null, Validators.required ],
       location: [ experience?.location || null ],
-      current: [ experience?.current || false ],
+      currentRole: [ experience?.currentRole || false ],
       startDate: [
         experience?.startDate ? moment(experience.startDate, 'MMM YYYY') : null,
         Validators.required
@@ -86,7 +86,7 @@ export class WorkExperienceEditComponent implements OnInit {
   }
 
   enableOrDisableEnDate() {
-    const currentRole = this.workExperienceForm.controls['current'].value;
+    const currentRole = this.workExperienceForm.controls['currentRole'].value;
 
     if (currentRole) {
       this.workExperienceForm.controls['endDate'].disable();
@@ -203,7 +203,7 @@ export class WorkExperienceEditComponent implements OnInit {
     return {
       ...formData,
       startDate: moment(formData.startDate).format('MMM YYYY'),
-      endDate: formData.current ? null : moment(formData.endDate).format('MMM YYYY')
+      endDate: formData.currentRole ? null : moment(formData.endDate).format('MMM YYYY')
     }
   }
 
