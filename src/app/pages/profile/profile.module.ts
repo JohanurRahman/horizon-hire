@@ -11,6 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { NumbersOnlyModule } from '../../directives/numbers-only/numbers-only.module';
 import { DisableControlModule } from '../../directives/disable-control/disable-control.module';
@@ -24,10 +26,9 @@ import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/pers
 import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
 import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
 import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.c
     WorkExperienceComponent,
     ProfilePrivacyComponent,
     WorkExperienceEditComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ShareProfileComponent
   ],
   imports: [
     CommonModule,
