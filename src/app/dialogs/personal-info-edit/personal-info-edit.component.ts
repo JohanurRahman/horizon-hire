@@ -36,10 +36,10 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.imgUrl = this.data?.photoURL || null;
+    this.imgUrl = this.data?.profilePicture || null;
 
     this.personalInfoForm = this.fb.group({
-      photoURL: [ this.data?.photoURL || null ],
+      profilePicture: [ this.data?.profilePicture || null ],
       firstName: [ this.data?.firstName || null, Validators.required],
       lastName: [ this.data?.lastName || null, Validators.required],
       title: [ this.data?.title || null ],
@@ -58,7 +58,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (!this.personalInfoForm.controls['photoURL'].value) {
+    if (!this.personalInfoForm.controls['profilePicture'].value) {
       this.toast.info('Please provide profile picture');
       return;
     }
@@ -69,7 +69,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     };
 
     // If it's an url then only update profile
-    if (!formData.photoURL || typeof formData.photoURL === 'string') {
+    if (!formData.profilePicture || typeof formData.profilePicture === 'string') {
       this.updateProfile(formData).pipe(
         tap(() => {
           this.dialogRef.close();
@@ -79,9 +79,9 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // if photoUrl type if File then upload image
+    // if profilePicture type if File then upload image
     this.imageUploadService
-      .uploadImage(formData.photoURL, `images/profile/${this.data.uid}`)
+      .uploadImage(formData.profilePicture, `images/profile/${this.data.uid}`)
       .pipe(
         this.toast.observe({
           loading: 'Uploading profile image...',
@@ -89,7 +89,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
           error: 'There was an error in uploading the image',
         }),
         switchMap((url) => {
-          const data = { ...formData, uid: this.data.uid, photoURL: url };
+          const data = { ...formData, uid: this.data.uid, profilePicture: url };
           return this.updateProfile(data);
         }),
         tap(() => {
@@ -130,7 +130,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     }
 
     if (isValidImage) {
-      this.personalInfoForm.controls['photoURL'].setValue(files[0]);
+      this.personalInfoForm.controls['profilePicture'].setValue(files[0]);
 
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
