@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { Moment } from 'moment';
@@ -14,17 +14,8 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { WorkExperience } from '@models';
 import { ImageUploadService } from '../../services/image-upload.service';
 import { WorkExperienceService } from '../../services/work-experience.service';
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'MMMM, YYYY',
-    monthYearLabel: 'MMM YYYY'
-  },
-};
-
+import { dateValidator } from '../../utils/validators';
+import { MY_DATE_FORMATS } from '../../utils/constants';
 
 @Component({
   selector: 'app-work-experience-edit',
@@ -32,7 +23,7 @@ export const MY_FORMATS = {
   styleUrls: ['./work-experience-edit.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
   ],
 })
 
@@ -76,7 +67,7 @@ export class WorkExperienceEditComponent implements OnInit {
         Validators.required
       ],
       description: [ experience?.description || null, Validators.required ]
-    })
+    },{ validators: dateValidator('startDate', 'endDate') })
   }
 
   closeDialog() {

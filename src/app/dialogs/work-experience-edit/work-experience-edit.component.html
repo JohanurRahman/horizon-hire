@@ -62,8 +62,12 @@
                         (monthSelected)="setMonthAndYear($event, startDate, 'start')">
         </mat-datepicker>
 
-        <mat-error *ngIf="workExperienceForm.controls['startDate'].invalid" >
+        <mat-error *ngIf="workExperienceForm.controls['startDate'].errors?.['required']" >
           Start date is required
+        </mat-error>
+
+        <mat-error *ngIf="workExperienceForm.controls['startDate'].errors?.['invalidDate']" >
+          Start date must be less than end Date
         </mat-error>
       </mat-form-field>
 
