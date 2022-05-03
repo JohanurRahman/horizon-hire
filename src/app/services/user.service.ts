@@ -1,11 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, from, Observable, of, switchMap } from 'rxjs';
-import { doc, docData, Firestore, setDoc, updateDoc  } from '@angular/fire/firestore';
+import {
+  collection,
+  doc,
+  docData,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where
+} from '@angular/fire/firestore';
 
 import { User, WorkExperience } from '@models';
 import { AuthService } from './auth.service';
 import { WorkExperienceService } from './work-experience.service';
 import * as moment from 'moment';
+import { QuerySnapshot } from '@firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +61,11 @@ export class UserService {
 
   updateUserInfoSource(userInfo: User) {
     this.userInfoSource.next(userInfo)
+  }
+
+  updateUsername(username: string): Observable<QuerySnapshot> {
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('username', "==", username));
+    return from(getDocs(q));
   }
 }

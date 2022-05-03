@@ -3,7 +3,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from '@models';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { EMPTY, filter, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -79,5 +79,36 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
   copyLink() {
     this.clipboard.copy(this.profileUrl);
     this.toast.success('Link copied');
+  }
+
+  updateProfileLink() {
+    if (this.usernameControl.invalid) {
+      return;
+    }
+
+    const profileName = this.usernameControl.value;
+
+    const loadingToastRef = this.toast.loading('Checking if username is available...', {autoClose: true})
+    this.userService.updateUsername(profileName).pipe(
+      switchMap((response) => {
+        loadingToastRef.close();
+        if (response.empty) {
+          return this.userService.updateUser({ uid: this.userInfo.uid, username: profileName }).pipe(
+            this.toast.observe({
+              loading: 'Updating profile link...',
+              success: 'Profile link updated successfully',
+              error: 'There was an error in updating profile link',
+            }),
+          )
+        }
+        this.toast.error('Username already exist')
+        return EMPTY;
+      }),
+      tap(() => {
+        this.editLink();
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe()
+
   }
 }
