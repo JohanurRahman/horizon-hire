@@ -23,7 +23,7 @@
     <div class="grid grid-cols-[20%_1fr] gap-x-[30px] items-center">
 
       <div class="user-photo">
-        <img [src]="companyLogoUrl ?? '/assets/images/company/company.png'" alt=""/>
+        <img [src]="companyLogoUrl ?? '/assets/images/company/company.png'" alt="" />
         <button type="button" mat-mini-fab (click)="inputField.click()">
           <mat-icon>edit</mat-icon>
         </button>
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <mat-checkbox class="mb-4" (change)="onCheck($event.checked)">
+    <mat-checkbox class="mb-4" (change)="enableOrDisableEnDate()" formControlName="current">
       I currently work here
     </mat-checkbox>
 

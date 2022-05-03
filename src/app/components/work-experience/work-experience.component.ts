@@ -13,6 +13,7 @@ import { Subject, takeUntil, tap } from 'rxjs';
   templateUrl: './work-experience.component.html',
   styleUrls: ['./work-experience.component.scss']
 })
+
 export class WorkExperienceComponent implements OnInit, OnDestroy {
 
   @Input() userInfo: User;
@@ -38,15 +39,28 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  openDialog() {
+  add() {
+    this.openDialog();
+  }
+
+  update(workExperience: WorkExperience) {
+    this.openDialog(workExperience);
+  }
+
+  openDialog(experience?: WorkExperience) {
+    const data = {
+      uid: this.userInfo.uid,
+      experience
+    }
     this.workExperienceEditDialogRef = this.dialog.open(WorkExperienceEditComponent, {
-      data: { uid: this.userInfo.uid },
+      data: data,
       width: '700px',
-      panelClass: 'dialog-edit'
+      panelClass: 'dialog-edit',
+      disableClose: true
     });
   }
 
-  openConfirmDialog(id: string) {
+  delete(id: string) {
     this.confirmationDialogRef = this.dialog.open(ConfirmationComponent, {
       data: { id, uid: this.userInfo.uid },
       width: '600px',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, deleteDoc, doc, Firestore, getDocs } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, updateDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, from, Observable } from 'rxjs';
-import { WorkExperience } from '@models';
+import { User, WorkExperience } from '@models';
 import * as moment from 'moment';
 
 @Injectable({
@@ -32,6 +32,16 @@ export class WorkExperienceService {
   addExperience(experience: any, uid: string): Observable<any> {
     const userSubCollection = collection(this.firestore, `users/${uid}/work-experience`);
     return from(addDoc(userSubCollection, experience));
+  }
+  updateUser(user: User): Observable<void> {
+    const ref = doc(this.firestore, 'users', user.uid);
+    return from(updateDoc(ref, { ...user }));
+  }
+
+  updateExperience(experience: any, id: string, uid: string): Observable<any> {
+    const ref = collection(this.firestore, `users/${uid}/work-experience`);
+    const document = doc(ref, id);
+    return from(updateDoc(document, { ...experience }));
   }
 
   getWorkExperiences(uId: string) {

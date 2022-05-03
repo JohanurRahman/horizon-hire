@@ -11,7 +11,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { validateImageFile } from '../../utils/function';
 import { HotToastService } from '@ngneat/hot-toast';
-import { User } from '@models';
+import { WorkExperience } from '@models';
 import { ImageUploadService } from '../../services/image-upload.service';
 import { WorkExperienceService } from '../../services/work-experience.service';
 
@@ -50,22 +50,33 @@ export class WorkExperienceEditComponent implements OnInit {
     private imageUploadService: ImageUploadService,
     private workExperienceService: WorkExperienceService,
     private dialogRef: MatDialogRef<WorkExperienceEditComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    @Inject(MAT_DIALOG_DATA) private data: { experience?: WorkExperience, uid: string },
   ) { }
 
   ngOnInit(): void {
-    this.workExperienceForm = this.fb.group({
-      title: [ null, Validators.required ],
-      companyLogo: [ null ],
-      companyName: [ null, Validators.required ],
-      location: [ null ],
-      current: [ false ],
-      startDate: [ null, Validators.required ],
-      endDate: [ null, Validators.required ],
-      description: [ null, Validators.required ]
-    })
+    this.companyLogoUrl = this.data.experience?.companyLogo || null;
 
-    this.dialogRef.disableClose = true;
+    this.setWorkExperienceForm(this.data.experience);
+    this.enableOrDisableEnDate();
+  }
+
+  setWorkExperienceForm(experience?: WorkExperience) {
+    this.workExperienceForm = this.fb.group({
+      title: [ experience?.title || null, Validators.required ],
+      companyLogo: [ experience?.companyLogo || null ],
+      companyName: [ experience?.companyName || null, Validators.required ],
+      location: [ experience?.location || null ],
+      current: [ experience?.current || false ],
+      startDate: [
+        experience?.startDate ? moment(experience.startDate, 'MMM YYYY') : null,
+        Validators.required
+      ],
+      endDate: [
+        experience?.endDate ? moment(experience.endDate, 'MMM YYYY') : null,
+        Validators.required
+      ],
+      description: [ experience?.description || null, Validators.required ]
+    })
   }
 
   closeDialog() {
@@ -83,14 +94,10 @@ export class WorkExperienceEditComponent implements OnInit {
     datepicker.close();
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-  }
+  enableOrDisableEnDate() {
+    const currentRole = this.workExperienceForm.controls['current'].value;
 
-  onCheck(checked: boolean) {
-    this.workExperienceForm.controls['current'].setValue(checked);
-
-    if (checked) {
+    if (currentRole) {
       this.workExperienceForm.controls['endDate'].disable();
       return;
     }
@@ -105,17 +112,84 @@ export class WorkExperienceEditComponent implements OnInit {
 
     const formData = this.constructFormData(this.workExperienceForm.getRawValue());
 
+    const workExperienceId = this.data.experience?.id;
+
+    if (workExperienceId) {
+      // update
+      this.updateWorkExperience(formData)
+      return;
+    }
+
+    this.addWorkExperience(formData);
+    // add
+
+    console.log('WORK EXPERIENCE ID: ', this.data.experience?.id);
+  }
+
+  addWorkExperience(formData) {
     this.imageUploadService
       .uploadImage(formData.companyLogo, `images/company/${formData.companyLogo.name}`)
       .pipe(
         this.toast.observe({
-          loading: 'Saving Experience',
-          success: 'Experience successfully',
-          error: 'There was an error while saving experience',
+          loading: 'Adding experience',
+          success: 'Experience added successfully',
+          error: 'There was an error while adding experience',
         }),
         switchMap((url) => {
           const data = { ...formData, companyLogo: url };
           return this.workExperienceService.addExperience(data, this.data.uid);
+        }),
+        switchMap(() => {
+          return this.workExperienceService.getWorkExperiences(this.data.uid);
+        }),
+        tap((response) => {
+          this.workExperienceService.updateExperienceSource(response);
+          this.dialogRef.close();
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+  }
+
+  updateWorkExperience(formData) {
+    console.log('FORM DATA: ', formData);
+    if (!this.data.experience) {
+      throw new Error('Work experience not found');
+    }
+
+    const workExperienceId = this.data.experience.id;
+    const uid = this.data.uid;
+
+    if (!formData.companyLogo || typeof formData.companyLogo === 'string') {
+      this.workExperienceService.updateExperience(formData, workExperienceId, uid).pipe(
+        this.toast.observe({
+          loading: 'Updating work experience',
+          success: 'Work experience updated successfully',
+          error: 'There was an error while updating work experience',
+        }),
+        switchMap(() => {
+          return this.workExperienceService.getWorkExperiences(uid);
+        }),
+        tap((response) => {
+          this.workExperienceService.updateExperienceSource(response);
+          this.dialogRef.close();
+        }),
+        takeUntil(this.destroy$)
+      ).subscribe()
+      return;
+    }
+
+    this.imageUploadService
+      .uploadImage(formData.companyLogo, `images/company/${formData.companyLogo.name}`)
+      .pipe(
+        this.toast.observe({
+          loading: 'Updating experience',
+          success: 'Experience Updating successfully',
+          error: 'There was an error while Updating experience',
+        }),
+        switchMap((url) => {
+          const data = { ...formData, companyLogo: url };
+          return this.workExperienceService.updateExperience(data, workExperienceId, uid);
         }),
         switchMap(() => {
           return this.workExperienceService.getWorkExperiences(this.data.uid);
@@ -159,4 +233,9 @@ export class WorkExperienceEditComponent implements OnInit {
       reader.onload = () => this.companyLogoUrl = reader.result;
     }
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
+
 }

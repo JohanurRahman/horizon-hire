@@ -71,7 +71,6 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       ).subscribe();
-
       return;
     }
 

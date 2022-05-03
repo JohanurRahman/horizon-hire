@@ -2,7 +2,7 @@
 
   <div class="card__header">
     <h4>Experience</h4>
-    <button class="button button-secondary" (click)="openDialog()">
+    <button class="button button-secondary" (click)="add()">
       Add
     </button>
   </div>
@@ -29,10 +29,10 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="update(item)">
             <span>Edit position</span>
           </button>
-          <button mat-menu-item (click)="openConfirmDialog(item.id)">
+          <button mat-menu-item (click)="delete(item.id)">
             <span>Delete position</span>
           </button>
         </mat-menu>

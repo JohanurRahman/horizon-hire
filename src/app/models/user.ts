@@ -6,7 +6,6 @@ export interface User {
   age?: number;
   title?: string;
   photoURL?: string;
-  workExperiences?: WorkExperience[];
 }
 
 export interface WorkExperience {
