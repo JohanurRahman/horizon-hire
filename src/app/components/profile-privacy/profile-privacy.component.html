@@ -7,6 +7,6 @@
       <mat-icon style="font-size: 20px; color: rgb(94, 89, 94); width: 20px; height: 20px; margin-right: 10px">info</mat-icon>
       <button class="test-button" style="color: #5c60f5; font-weight: 500">View</button>
     </div>
-    <mat-slide-toggle color="primary"></mat-slide-toggle>
+    <mat-slide-toggle color="primary" [checked]="userInfo.publicProfile" (change)="changeProfileVisibility($event)"></mat-slide-toggle>
   </div>
 </div>

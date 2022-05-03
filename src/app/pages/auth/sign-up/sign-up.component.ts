@@ -76,7 +76,7 @@ export class SignUpComponent {
       email: formData.email,
       firstName: formData.firstName,
       lastName: formData.lastName,
-      private: true
+      publicProfile: false
     }
   }
 

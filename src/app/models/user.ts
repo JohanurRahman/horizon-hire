@@ -6,7 +6,7 @@ export interface User {
   age?: number;
   title?: string;
   profilePicture?: string;
-  private?: boolean;
-  username: string;
+  publicProfile?: boolean;
+  username?: string;
 }
 
