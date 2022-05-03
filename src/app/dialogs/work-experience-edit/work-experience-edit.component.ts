@@ -114,11 +114,14 @@ export class WorkExperienceEditComponent implements OnInit {
           error: 'There was an error while saving experience',
         }),
         switchMap((url) => {
-          console.log('URL: ', url)
           const data = { ...formData, companyLogo: url };
           return this.workExperienceService.addExperience(data, this.data.uid);
         }),
-        tap(() => {
+        switchMap(() => {
+          return this.workExperienceService.getWorkExperiences(this.data.uid);
+        }),
+        tap((response) => {
+          this.workExperienceService.updateExperienceSource(response);
           this.dialogRef.close();
         }),
         takeUntil(this.destroy$)

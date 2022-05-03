@@ -8,8 +8,8 @@
   </div>
 
   <div class="card__content">
-    <ng-container *ngIf="userInfo.workExperiences">
-      <div class="experience-entry-container" *ngFor="let item of userInfo.workExperiences">
+    <ng-container *ngIf="workExperiences">
+      <div class="experience-entry-container" *ngFor="let item of workExperiences">
 
         <div class="flex gap-x-[20px]">
           <img class="company-logo" [src]="item.companyLogo ?? '/assets/images/company/company.png'" [alt]="item.companyName">

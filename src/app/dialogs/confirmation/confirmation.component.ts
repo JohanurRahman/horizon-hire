@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from '@models';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { WorkExperienceService } from '../../services/work-experience.service';
 
 @Component({
@@ -41,8 +41,12 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
         success: 'Work experience successfully',
         error: 'There was an error in deleting work experience',
       }),
+      switchMap(() => {
+        return this.workExperienceService.getWorkExperiences(uid);
+      }),
       tap({
-        next: () => {
+        next: (response) => {
+          this.workExperienceService.updateExperienceSource(response);
           this.dialogRef.close();
         },
         error: () => {

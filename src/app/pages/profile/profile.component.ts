@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { User } from '@models';
+import { User, WorkExperience } from '@models';
 import { HotToastService } from '@ngneat/hot-toast';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
 import * as moment from 'moment';
+import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
+import { WorkExperienceService } from '../../services/work-experience.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +20,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private toast: HotToastService,
-    private userService: UserService
+    private firestore: Firestore,
+    private userService: UserService,
+    private workExperienceService: WorkExperienceService
   ) { }
 
   ngOnInit(): void {
@@ -34,20 +38,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
           throw new Error('No user found');
         }
 
-        const workExperiences: any[] = [];
+        this.userInfo = user;
 
-        workExperience.forEach((doc) => {
-          workExperiences.push({ ...doc.data(), id: doc.id  })
-        })
-
-        this.userInfo = {
-          ...user,
-          workExperiences: workExperiences.sort((a, b) => {
-            return moment(b.startDate, 'MMM YYYY').diff(moment(a.startDate, 'MMM YYYY'))
-          })
-        };
-
-        console.log('USER INFO: ', this.userInfo);
+        this.workExperienceService.updateExperienceSource(workExperience);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
