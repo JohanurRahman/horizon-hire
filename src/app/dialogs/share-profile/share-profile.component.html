@@ -41,13 +41,26 @@
         </ng-container>
 
         <ng-template #editing>
-          <div style="display: flex; align-items: center; justify-content: space-between">
+          <div style="display: grid;grid-template-columns: minmax(auto, 60%) minmax(auto, 40%);
+    grid-column-gap: 20px;">
             <div>
               <p style="font-size: 16px; margin-bottom: 4px">{{ locationOrigin }}</p>
               <input type="text" [formControl]="usernameControl" style=" height:30px;max-width: 210px; min-width: 160px;
               width: 80%; background: #fff; border: 1px solid #ddd; box-shadow: none; color: #444;
             font-family: inherit;padding: 4px; transition: border-color .3s ease;">
 
+              <ng-container *ngIf="usernameControl.errors?.['required']">
+                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word" >
+                  Name is required
+                </p>
+              </ng-container>
+
+              <ng-container *ngIf="usernameControl.errors?.['pattern']">
+                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word" >
+                  Invalid name
+                </p>
+                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word">dot(.)[optional] is acceptable and have to be in between text</p>
+              </ng-container>
             </div>
             <div style="display: flex; align-items: center; column-gap: 10px">
               <button class="button button-secondary"  style="height: 35px; font-size: 16px" (click)="editLink()">

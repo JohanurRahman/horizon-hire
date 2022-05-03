@@ -26,7 +26,7 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
   editingLink = false;
   profileUrl: string;
 
-  usernameControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  usernameControl: FormControl = new FormControl();
 
   constructor(
     private toast: HotToastService,
@@ -47,7 +47,7 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
         this.userInfo = user;
 
         this.profileUrl = window.location.origin + '/' + this.userInfo.username;
-        this.usernameControl = new FormControl(this.userInfo.username, Validators.required);
+        this.usernameControl = new FormControl(this.userInfo.username, [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)?$/)]);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
