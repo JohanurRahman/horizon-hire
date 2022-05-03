@@ -6,6 +6,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { User } from '@models';
 
 @Component({
   selector: 'app-sign-up',
@@ -42,7 +43,7 @@ export class SignUpComponent {
 
     this.submitting = true;
 
-    const { firstName, lastName, email, password } = this.signUpForm.value;
+    const { email, password } = this.signUpForm.value;
 
     this.authService.signUp(email, password).pipe(
       this.toast.observe({
@@ -51,7 +52,8 @@ export class SignUpComponent {
         error: ({ message }) => `${message}`,
       }),
       switchMap(({ user: { uid }}) => {
-          return this.userService.addUser({ uid, email, firstName, lastName })
+        const data = this.constructUserData(uid, this.signUpForm.value);
+        return this.userService.addUser(data)
       }),
       tap({
         next: (res) => {
@@ -63,6 +65,19 @@ export class SignUpComponent {
       }),
       takeUntil(this.destroy$)
     ).subscribe();
+  }
+
+  constructUserData(uid, formData): User {
+    const name = formData.firstName.toLowerCase().split(' ')[0];
+    const username = name.concat('.', uid);
+    return {
+      uid,
+      username,
+      email: formData.email,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      private: true
+    }
   }
 
   navigateToSignIn() {
