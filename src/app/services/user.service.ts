@@ -6,7 +6,7 @@ import {
   docData,
   Firestore,
   getDoc,
-  getDocs,
+  getDocs, limit,
   query,
   setDoc,
   updateDoc,
@@ -63,9 +63,9 @@ export class UserService {
     this.userInfoSource.next(userInfo)
   }
 
-  updateUsername(username: string): Observable<QuerySnapshot> {
+  getByUserName(username: string): Observable<QuerySnapshot> {
     const usersRef = collection(this.firestore, 'users');
-    const q = query(usersRef, where('username', "==", username));
+    const q = query(usersRef, where('username', "==", username), limit(1));
     return from(getDocs(q));
   }
 }

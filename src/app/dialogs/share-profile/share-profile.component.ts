@@ -89,7 +89,7 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
     const profileName = this.usernameControl.value;
 
     const loadingToastRef = this.toast.loading('Checking if username is available...', {autoClose: true})
-    this.userService.updateUsername(profileName).pipe(
+    this.userService.getByUserName(profileName).pipe(
       switchMap((response) => {
         loadingToastRef.close();
         if (response.empty) {

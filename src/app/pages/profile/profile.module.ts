@@ -20,48 +20,42 @@ import { DisableControlModule } from '../../directives/disable-control/disable-c
 import { ProfileRoutingModule } from './profile-routing.module';
 
 import { ProfileComponent } from './profile.component';
-import { TopNavComponent } from '../../components/top-nav/top-nav.component';
-import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
-import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
-import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
-import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
-import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
+// import { TopNavComponent } from '../../components/top-nav/top-nav.component';
+// import { PersonalInfoComponent } from '../../components/personal-info/personal-info.component';
+// import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
+// import { WorkExperienceComponent } from '../../components/work-experience/work-experience.component';
+// import { ProfilePrivacyComponent } from '../../components/profile-privacy/profile-privacy.component';
+// import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
-import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
+// import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+// import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { SharedModule } from '../../components/shared.module';
 
 @NgModule({
   declarations: [
-    ProfileComponent,
-    TopNavComponent,
-    PersonalInfoComponent,
-    PersonalInfoEditComponent,
-    WorkExperienceComponent,
-    ProfilePrivacyComponent,
-    WorkExperienceEditComponent,
-    ConfirmationComponent,
-    ShareProfileComponent
+    ProfileComponent
   ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    DisableControlModule,
-    NumbersOnlyModule,
-    MatSlideToggleModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    ClipboardModule
+    SharedModule,
+    // MatToolbarModule,
+    // MatMenuModule,
+    // MatIconModule,
+    // MatButtonModule,
+    // MatTooltipModule,
+    // MatDialogModule,
+    // MatFormFieldModule,
+    // MatInputModule,
+    // ReactiveFormsModule,
+    // DisableControlModule,
+    // NumbersOnlyModule,
+    // MatSlideToggleModule,
+    // MatDatepickerModule,
+    // MatNativeDateModule,
+    // MatCheckboxModule,
+    // ClipboardModule
   ]
 })
 
