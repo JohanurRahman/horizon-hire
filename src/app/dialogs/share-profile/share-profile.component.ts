@@ -5,6 +5,8 @@ import { User } from '@models';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { UserService } from '../../services/user.service';
+import { FormControl, Validators } from '@angular/forms';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-share-profile',
@@ -21,9 +23,15 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
 
   userInfo: User;
 
+  editingLink = false;
+  profileUrl: string;
+
+  usernameControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
+
   constructor(
     private toast: HotToastService,
     private userService: UserService,
+    private clipboard: Clipboard,
     private dialogRef: MatDialogRef<ShareProfileComponent>,
   ) { }
 
@@ -37,6 +45,9 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
         }
 
         this.userInfo = user;
+
+        this.profileUrl = window.location.origin + '/' + this.userInfo.username;
+        this.usernameControl = new FormControl(this.userInfo.username, Validators.required);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
@@ -61,4 +72,12 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
+  editLink() {
+    this.editingLink = !this.editingLink;
+  }
+
+  copyLink() {
+    this.clipboard.copy(this.profileUrl);
+    this.toast.success('Link copied');
+  }
 }

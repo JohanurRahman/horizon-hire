@@ -29,6 +29,7 @@ import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
 import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ClipboardModule
   ]
 })
 
