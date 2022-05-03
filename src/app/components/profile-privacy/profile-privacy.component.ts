@@ -3,7 +3,9 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { UserService } from '../../services/user.service';
 import { User } from '@models';
 import { HotToastService } from '@ngneat/hot-toast';
-import { debounce, debounceTime, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile-privacy',
@@ -16,7 +18,10 @@ export class ProfilePrivacyComponent implements OnInit {
 
   private destroy$ = new Subject<void>();
 
+  shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;
+
   constructor(
+    private dialog: MatDialog,
     private toast: HotToastService,
     private userService: UserService
   ) { }
@@ -33,5 +38,14 @@ export class ProfilePrivacyComponent implements OnInit {
       }),
       takeUntil(this.destroy$)
     ).subscribe()
+  }
+
+  openShareProfileDialog() {
+    this.shareProfileDialogRef = this.dialog.open(ShareProfileComponent, {
+      data: { ...this.userInfo },
+      width: '800px',
+      panelClass: 'dialog-edit',
+      disableClose: true
+    });
   }
 }

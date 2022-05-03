@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         }
 
         this.userInfo = user;
+        this.userService.updateUserInfoSource(user);
 
         this.workExperienceService.updateExperienceSource(workExperience);
       }),

@@ -33,10 +33,6 @@ export class WorkExperienceService {
     const userSubCollection = collection(this.firestore, `users/${uid}/work-experience`);
     return from(addDoc(userSubCollection, experience));
   }
-  updateUser(user: User): Observable<void> {
-    const ref = doc(this.firestore, 'users', user.uid);
-    return from(updateDoc(ref, { ...user }));
-  }
 
   updateExperience(experience: any, id: string, uid: string): Observable<any> {
     const ref = collection(this.firestore, `users/${uid}/work-experience`);

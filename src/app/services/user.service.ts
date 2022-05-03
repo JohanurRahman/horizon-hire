@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, from, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, from, Observable, of, switchMap } from 'rxjs';
 import { doc, docData, Firestore, setDoc, updateDoc  } from '@angular/fire/firestore';
 
-import { User } from '@models';
+import { User, WorkExperience } from '@models';
 import { AuthService } from './auth.service';
 import { WorkExperienceService } from './work-experience.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
+
+  private userInfoSource = new BehaviorSubject<User | null>(null);
+  currentUserInfoSource = this.userInfoSource.asObservable();
 
   constructor(
     private firestore: Firestore,
@@ -41,5 +45,9 @@ export class UserService {
   updateUser(user: User): Observable<void> {
     const ref = doc(this.firestore, 'users', user.uid);
     return from(updateDoc(ref, { ...user }));
+  }
+
+  updateUserInfoSource(userInfo: User) {
+    this.userInfoSource.next(userInfo)
   }
 }

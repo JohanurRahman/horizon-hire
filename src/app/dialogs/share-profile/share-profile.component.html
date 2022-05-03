@@ -52,14 +52,33 @@
     </div>
 
     <div style="border-top: 1px solid #dae3ed; display: flex; justify-content: space-between; padding: 20px; align-items: center">
-      <div>
-        <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile link is private </p>
+      <ng-container *ngIf="!userInfo.publicProfile; else publicProfile">
+        <div>
+          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile link is private </p>
 
-        <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">People cannot access your profile link now.</p>
-      </div>
+          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">People cannot access your profile link now.</p>
+        </div>
 
-<!--      <button class="button button-primary" style="font-size: 14px; width: 180px; color: #5c60f5; background-color: transparent">Set profile link as Public</button>-->
-      <button class="button button-primary" style="width: 130px; height: 35px; font-size: 14px; color: #5c60f5; background-color: transparent">Deactivate Link</button>
+        <button class="button button-primary" (click)="changeProfileVisibility(true)"
+                style="font-size: 14px; width: 180px; color: #5c60f5; background-color: transparent">
+          Set profile link as Public
+        </button>
+      </ng-container>
+
+
+      <ng-template #publicProfile>
+        <div>
+          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile public </p>
+
+          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">Anyone with this link can see it.</p>
+        </div>
+
+        <button class="button button-primary" (click)="changeProfileVisibility(false)"
+                style="width: 130px; height: 35px; font-size: 14px; color: #5c60f5; background-color: transparent">
+          Deactivate Link
+        </button>
+      </ng-template>
+
     </div>
 
   </div>

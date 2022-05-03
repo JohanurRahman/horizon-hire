@@ -5,7 +5,7 @@
     <div class="flex items-center">
       <p style="margin-bottom: 0; margin-right: 10px; font-size: 16px; color: rgb(94, 89, 94)">Make my profile public</p>
       <mat-icon style="font-size: 20px; color: rgb(94, 89, 94); width: 20px; height: 20px; margin-right: 10px">info</mat-icon>
-      <button class="test-button" style="color: #5c60f5; font-weight: 500">View</button>
+      <button class="test-button" style="color: #5c60f5; font-weight: 500" (click)="openShareProfileDialog()">View</button>
     </div>
     <mat-slide-toggle color="primary" [checked]="userInfo.publicProfile" (change)="changeProfileVisibility($event)"></mat-slide-toggle>
   </div>

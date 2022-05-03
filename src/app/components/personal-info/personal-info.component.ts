@@ -32,9 +32,10 @@ export class PersonalInfoComponent implements OnInit {
 
   shareProfile() {
     this.shareProfileDialogRef = this.dialog.open(ShareProfileComponent, {
+      data: { ...this.userInfo },
       width: '800px',
       panelClass: 'dialog-edit',
-      disableClose: false
+      disableClose: true
     });
   }
 
