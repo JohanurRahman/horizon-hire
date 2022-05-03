@@ -17,6 +17,7 @@ import { Subject, takeUntil, tap } from 'rxjs';
 export class WorkExperienceComponent implements OnInit, OnDestroy {
 
   @Input() userInfo: User;
+  @Input() editable = true;
 
   private destroy$ = new Subject<void>();
 

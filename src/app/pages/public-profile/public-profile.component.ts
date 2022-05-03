@@ -4,7 +4,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../../services/user.service';
 import { WorkExperienceService } from '../../services/work-experience.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { EMPTY, switchMap, tap } from 'rxjs';
 import { User, WorkExperience } from '@models';
 import { snapshotChanges } from '@angular/fire/compat/database';
 import { QuerySnapshot } from '@firebase/firestore';
@@ -20,6 +20,8 @@ export class PublicProfileComponent implements OnInit {
   userInfo: User;
   workExperience: WorkExperience[] = [];
 
+  loading = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private toast: HotToastService,
@@ -29,19 +31,27 @@ export class PublicProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const loadingRef = this.toast.loading('Loading profile...');
+
     const username = this.activatedRoute.snapshot.params['username'];
     this.userService.getByUserName(username).pipe(
       switchMap((snapshot) => {
         this.userInfo = snapshot.docs[0]?.data() as User;
 
-        if(!this.userInfo) {
-          throw new Error('No user found');
+        if(!this.userInfo || !this.userInfo.publicProfile) {
+          return EMPTY;
         }
 
         return this.workExperienceService.getWorkExperiences(this.userInfo.uid);
       }),
-      tap((snapshot: QuerySnapshot) => {
-        this.workExperienceService.updateExperienceSource(snapshot)
+      tap({
+        next: (snapshot: QuerySnapshot) => {
+          this.workExperienceService.updateExperienceSource(snapshot)
+        },
+        complete: () => {
+          this.loading = false;
+          loadingRef.close();
+        }
       })
     ).subscribe()
   }
