@@ -101,6 +101,11 @@ export class WorkExperienceEditComponent implements OnInit {
       return;
     }
 
+    if (!this.workExperienceForm.controls['companyLogo'].value) {
+      this.toast.info('Please select a company logo');
+      return;
+    }
+
     const formData = this.constructFormData(this.workExperienceForm.getRawValue());
 
     const workExperienceId = this.data.experience?.id;

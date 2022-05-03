@@ -14,5 +14,7 @@ export function dateValidator (startDate: any, endDate: any) {
       start.setErrors({ invalidDate: true })
       return;
     }
+
+    return start.setErrors(null);
   };
-};
+}
