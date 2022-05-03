@@ -58,6 +58,11 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (!this.personalInfoForm.controls['photoURL'].value) {
+      this.toast.info('Please provide profile picture');
+      return;
+    }
+
     const formData = {
       ...this.personalInfoForm.getRawValue(),
       uid: this.data.uid
