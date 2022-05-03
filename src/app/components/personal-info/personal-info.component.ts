@@ -12,6 +12,7 @@ import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile
 export class PersonalInfoComponent implements OnInit {
 
   @Input() userInfo: User;
+  @Input() editable = true;
 
   personalInfoEditDialogRef: MatDialogRef<PersonalInfoEditComponent>;
   shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;

@@ -1,1 +1,14 @@
-<p>public-profile works!</p>
+<div class="page-wrapper">
+  <div class="wrapper">
+
+    <ng-container *ngIf="userInfo">
+      <app-personal-info [userInfo]="userInfo" [editable]="false"></app-personal-info>
+
+      <div class="mt-5" >
+        <app-work-experience [userInfo]="userInfo"></app-work-experience>
+      </div>
+
+    </ng-container>
+
+  </div>
+</div>

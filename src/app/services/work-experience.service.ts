@@ -3,6 +3,7 @@ import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, updateDoc } fro
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { User, WorkExperience } from '@models';
 import * as moment from 'moment';
+import { QuerySnapshot } from '@firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class WorkExperienceService {
   ) {}
 
 
-  updateExperienceSource(workExperiences: any) {
+  updateExperienceSource(workExperiences) {
     const data: WorkExperience[] = [];
     workExperiences.forEach((doc) => {
       data.push({ ...doc.data(), id: doc.id  })

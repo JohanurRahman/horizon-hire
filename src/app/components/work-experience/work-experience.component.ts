@@ -33,6 +33,7 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.workExperienceService.currentWorkExperiences.pipe(
       tap((workExperiences: WorkExperience[]) => {
+        console.log('WORK: ', workExperiences);
         this.workExperiences = workExperiences;
       }),
       takeUntil(this.destroy$)

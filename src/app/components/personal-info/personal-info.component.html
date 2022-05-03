@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="personal-info-actions">
+  <div class="personal-info-actions" *ngIf="editable">
     <button matTooltip="Edit personal information" class="mr-3" (click)="editPersonalInfo()">
       <mat-icon>edit</mat-icon>
     </button>
