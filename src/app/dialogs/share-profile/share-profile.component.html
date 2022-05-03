@@ -1,0 +1,66 @@
+<div mat-dialog-title>
+  <h2 class="title">
+    Share my profile
+  </h2>
+  <button class="action" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<div mat-dialog-content cdkScrollable>
+  <div style="padding: 5px 20px 20px;">
+
+    <div style="
+    background-color: #f7f9fe;
+    border-radius: 3px; margin: 15px 0;
+    justify-content: space-between; padding: 20px">
+      <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 12px">Customize profile link</p>
+
+<!--      <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">Set your profile as public to get the link.</p>-->
+
+
+      <div style="display: flex; align-items: center; justify-content: space-between">
+        <div style="display: flex; align-items: center; column-gap: 15px">
+          <a target="_blank" href="{{ locationOrigin + '/' + 'johanur.rahman'}}" style="font-size: 16px; color: #5c60f5">{{ locationOrigin + '/' + username}}</a>
+          <mat-icon style="font-size: 20px">edit</mat-icon>
+        </div>
+
+        <button class="button button-secondary" style="width: 130px; height: 35px; font-size: 14px">
+          <mat-icon style="margin-right: 8px; font-size: 16px; height: 17px; width: 17px;">content_copy</mat-icon>
+          Copy Link
+        </button>
+      </div>
+
+<!--      <div style="display: flex; align-items: center; justify-content: space-between">-->
+<!--        <div>-->
+<!--          <p style="font-size: 16px; margin-bottom: 4px">{{ locationOrigin }}</p>-->
+<!--          <input type="text" style=" height:30px;max-width: 210px; min-width: 160px;  width: 80%; background: #fff; border: 1px solid #ddd; box-shadow: none; color: #444;-->
+<!--    font-family: inherit;padding: 0.5rem 1rem; transition: border-color .3s ease;">-->
+
+<!--        </div>-->
+<!--        <div style="display: flex; align-items: center; column-gap: 10px">-->
+<!--          <button class="button button-secondary"  style="height: 35px; font-size: 16px">-->
+<!--            Cancel-->
+<!--          </button>-->
+<!--          <button class="button button-primary"  style="height: 35px; font-size: 16px">-->
+<!--            Save-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+    </div>
+
+    <div style="border-top: 1px solid #dae3ed; display: flex; justify-content: space-between; padding: 20px; align-items: center">
+      <div>
+        <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile link is private </p>
+
+        <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">People cannot access your profile link now.</p>
+      </div>
+
+<!--      <button class="button button-primary" style="font-size: 14px; width: 180px; color: #5c60f5; background-color: transparent">Set profile link as Public</button>-->
+      <button class="button button-primary" style="width: 130px; height: 35px; font-size: 14px; color: #5c60f5; background-color: transparent">Deactivate Link</button>
+    </div>
+
+  </div>
+</div>
