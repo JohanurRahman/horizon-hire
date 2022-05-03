@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         loading: 'Loading user information',
         error: ({ message }) => `${message}`
       }),
-      filter(([user, workExperience]) => user !== null),
+      filter((response) => response !== null),
       tap(([user, workExperience]) => {
         if (!user) {
           throw new Error('No user found');
