@@ -33,7 +33,7 @@ export class TopNavComponent implements OnDestroy {
         error: ({ message }) => `${message}`
       }),
       tap(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth']);
       }),
       takeUntil(this.destroy$)
     ).subscribe()

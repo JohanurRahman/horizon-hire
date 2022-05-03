@@ -4,21 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'auth',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/auth/auth.module').then((m) => m.AuthModule),
-      }
-    ],
+    loadChildren: () => import('./pages/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'profile',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/profile/profile.module').then((m) => m.ProfileModule),
-      }
-    ]
+    loadChildren: () => import('./pages/profile/profile.module').then((m) => m.ProfileModule),
+  },
+  {
+    path: ':username',
+    loadChildren: () => import('./pages/public-profile/public-profile.module').then((m) => m.PublicProfileModule),
   },
   {
     path: '**',
