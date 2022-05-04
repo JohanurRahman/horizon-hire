@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
 import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
@@ -44,7 +44,6 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe();
   }
-
 
   editPersonalInfo() {
     this.dialog.open(PersonalInfoEditComponent, {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -99,7 +99,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
         this.toast.observe({
           loading: 'Uploading profile image...',
           success: 'Image uploaded successfully',
-          error: 'There was an error in uploading the image',
+          error: 'There was an error while uploading the image',
         }),
         switchMap((url) => {
           const data = { ...formData, uid: this.userInfo.uid, profilePicture: url };
@@ -113,20 +113,15 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  updateProfile(data) {
+  updateProfile(data): Observable<void> {
     return this.userService.updateUser(data).pipe(
       this.toast.observe({
         loading: 'Updating profile...',
         success: 'Profile updated successfully',
-        error: 'There was an error in updating the profile',
+        error: 'There was an error while updating the profile',
       }),
     );
   }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-  }
-
 
   uploadImage(event) {
     const files: FileList = event.target.files;
@@ -150,5 +145,10 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       reader.onload = () => this.imgUrl = reader.result;
     }
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
+
 
 }
