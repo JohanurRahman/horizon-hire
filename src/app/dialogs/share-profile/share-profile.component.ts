@@ -1,12 +1,14 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { HotToastService } from '@ngneat/hot-toast';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '@models';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { EMPTY, filter, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
-import { UserService } from '../../services/user.service';
+import { EMPTY, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
+
+import { HotToastService } from '@ngneat/hot-toast';
+import { MatDialogRef } from '@angular/material/dialog';
+
+import { UserService } from '@services';
+import { User } from '@models';
+
 
 @Component({
   selector: 'app-share-profile',
@@ -16,15 +18,12 @@ import { Clipboard } from '@angular/cdk/clipboard';
 
 export class ShareProfileComponent implements OnInit, OnDestroy {
 
-  locationOrigin: string;
-  username = 'johanur.rahman';
-
   private destroy$ = new Subject<void>();
 
   userInfo: User;
-
   editingLink = false;
   profileUrl: string;
+  locationOrigin: string;
 
   usernameControl: FormControl = new FormControl();
 
@@ -35,9 +34,11 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<ShareProfileComponent>,
   ) { }
 
-  ngOnInit(): void {
-    this.locationOrigin = window.location.origin;
+  ngOnInit() {
+    this.getCurrentUserInfo();
+  }
 
+  getCurrentUserInfo() {
     this.userService.currentUserInfoSource.pipe(
       tap((user: User | null) => {
         if (!user) {
@@ -46,7 +47,9 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
 
         this.userInfo = user;
 
-        this.profileUrl = window.location.origin + '/' + this.userInfo.username;
+        this.locationOrigin = window.location.origin;
+        this.profileUrl = this.locationOrigin + '/' + this.userInfo.username;
+
         this.usernameControl = new FormControl(this.userInfo.username, [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)?$/)]);
       }),
       takeUntil(this.destroy$)

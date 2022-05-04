@@ -9,64 +9,68 @@
 
 
 <div mat-dialog-content cdkScrollable>
-  <div style="padding: 5px 20px 20px;">
 
-    <div style=" background-color: #f7f9fe;border-radius: 3px; margin: 15px 0; justify-content: space-between; padding: 20px">
+  <div class="pt-[5px] pb-5 pr-5 pl-5">
 
-      <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 12px">Customize profile link</p>
+    <div class="my-[15px] p-5 rounded bg-[#f7f9fe]">
 
-      <ng-container *ngIf="!userInfo.publicProfile; else public">
-        <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">Set your profile as public to get the link.</p>
+      <p class="title">
+        Customize profile link
+      </p>
+
+      <ng-container *ngIf="!userInfo.publicProfile; else content">
+        <p class="info">
+          Set your profile as public to get the link.
+        </p>
       </ng-container>
 
-      <ng-template #public>
+      <ng-template #content>
 
         <ng-container *ngIf="!editingLink; else editing">
-          <div style="    display: grid;
-    grid-template-columns: minmax(auto, 80%) minmax(auto, 20%);
-    grid-column-gap: 40px;">
-            <div>
-              <a target="_blank" [href]="profileUrl" style="font-size: 16px; color: #5c60f5; word-break: break-word"> {{ profileUrl }}</a>
 
-              <button (click)="editLink()">
-                <mat-icon style="font-size: 20px" >edit</mat-icon>
+          <div class="view-mode-container">
+            <div>
+              <a class="profile-link" target="_blank" [href]="profileUrl">
+                {{ profileUrl }}
+              </a>
+
+              <button class="edit-button" (click)="editLink()">
+                <mat-icon>edit</mat-icon>
               </button>
             </div>
 
-            <button class="button button-secondary" style="width: 130px; height: 35px; font-size: 14px" (click)="copyLink()">
-              <mat-icon style="margin-right: 8px; font-size: 16px; height: 17px; width: 17px;">content_copy</mat-icon>
+            <button class="button button-secondary" (click)="copyLink()">
+              <mat-icon>content_copy</mat-icon>
               Copy Link
             </button>
           </div>
         </ng-container>
 
         <ng-template #editing>
-          <div style="display: grid;grid-template-columns: minmax(auto, 60%) minmax(auto, 40%);
-    grid-column-gap: 20px;">
+          <div class="editing-mode-container">
+
             <div>
-              <p style="font-size: 16px; margin-bottom: 4px">{{ locationOrigin }}</p>
-              <input type="text" [formControl]="usernameControl" style=" height:30px;max-width: 210px; min-width: 160px;
-              width: 80%; background: #fff; border: 1px solid #ddd; box-shadow: none; color: #444;
-            font-family: inherit;padding: 4px; transition: border-color .3s ease;">
+              <p class="origin-url"> {{ locationOrigin }} </p>
+
+              <input class="username-input" type="text" [formControl]="usernameControl">
 
               <ng-container *ngIf="usernameControl.errors?.['required']">
-                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word" >
-                  Name is required
-                </p>
+                <p class="error-text"> Name is required </p>
               </ng-container>
 
               <ng-container *ngIf="usernameControl.errors?.['pattern']">
-                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word" >
-                  Invalid name
+                <p class="error-text"> Invalid name </p>
+                <p class="error-text">
+                  dot(.)[optional] is acceptable and have to be in between text
                 </p>
-                <p style="color: red; margin-bottom: 0; margin-top: 4px; word-break: break-word">dot(.)[optional] is acceptable and have to be in between text</p>
               </ng-container>
             </div>
-            <div style="display: flex; align-items: center; column-gap: 10px">
-              <button class="button button-secondary"  style="height: 35px; font-size: 16px" (click)="editLink()">
+
+            <div class="flex items-center gap-x-2.5">
+              <button class="button button-secondary" (click)="editLink()">
                 Cancel
               </button>
-              <button class="button button-primary"  style="height: 35px; font-size: 16px" (click)="updateProfileLink()">
+              <button class="button button-primary" (click)="updateProfileLink()">
                 Save
               </button>
             </div>
@@ -76,33 +80,41 @@
 
     </div>
 
-    <div style="border-top: 1px solid #dae3ed; display: flex; justify-content: space-between; padding: 20px; align-items: center">
-      <ng-container *ngIf="!userInfo.publicProfile; else publicProfile">
-        <div>
-          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile link is private </p>
+    <div class="privacy-actions-container">
 
-          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">People cannot access your profile link now.</p>
-        </div>
+      <div>
+        <p class="title">
+          <ng-container *ngIf="!userInfo.publicProfile">
+            Your profile link is private
+          </ng-container>
 
-        <button class="button button-primary" (click)="changeProfileVisibility(true)"
-                style="font-size: 14px; width: 180px; color: #5c60f5; background-color: transparent">
+          <ng-container *ngIf="userInfo.publicProfile">
+            Your profile public
+          </ng-container>
+        </p>
+
+        <p class="info">
+          <ng-container *ngIf="!userInfo.publicProfile">
+            People cannot access your profile link now.
+          </ng-container>
+
+          <ng-container *ngIf="userInfo.publicProfile">
+            Anyone with this link can see it.
+          </ng-container>
+        </p>
+      </div>
+
+      <ng-container *ngIf="!userInfo.publicProfile">
+        <button class="button button-link" (click)="changeProfileVisibility(true)">
           Set profile link as Public
         </button>
       </ng-container>
 
-
-      <ng-template #publicProfile>
-        <div>
-          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; font-weight: 500; margin-bottom: 5px">Your profile public </p>
-
-          <p style="color: rgba(0, 0, 0, 0.87); font-size: 17px; margin: 10px 0">Anyone with this link can see it.</p>
-        </div>
-
-        <button class="button button-primary" (click)="changeProfileVisibility(false)"
-                style="width: 130px; height: 35px; font-size: 14px; color: #5c60f5; background-color: transparent">
+      <ng-container *ngIf="userInfo.publicProfile">
+        <button class="button button-link" (click)="changeProfileVisibility(false)">
           Deactivate Link
         </button>
-      </ng-template>
+      </ng-container>
 
     </div>
 
