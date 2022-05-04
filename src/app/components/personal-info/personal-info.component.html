@@ -2,22 +2,23 @@
 
   <div class="flex">
     <img class="w-130 h-130 rounded-[50%] border-solid border-[1px] border-[#b5c5e6] object-cover"
-         [src]="userInfo.profilePicture ?? 'assets/images/profile/user-avatar.png'" [alt]="'Johanur Rahman'">
+         [src]="userInfo.profilePicture ?? 'assets/images/profile/user-avatar.png'"
+         [alt]="userInfo.firstName + ' ' + userInfo.lastName">
 
     <div class="ml-5">
-      <h3 class="name">{{ userInfo.firstName }} {{ userInfo.lastName}}</h3>
+      <h3 class="name">
+        {{ userInfo.firstName }} {{ userInfo.lastName}}
+      </h3>
       <p *ngIf="userInfo.title" class="title">
         {{ userInfo.title }}
       </p>
       <p *ngIf="userInfo.age" class="age">
         Age: {{ userInfo.age }}
       </p>
-
       <div class="email-container flex items-center mt-5">
         <mat-icon class="icon">mail_outlined</mat-icon>
         <p class="text">{{ userInfo.email }}</p>
       </div>
-
     </div>
   </div>
 
