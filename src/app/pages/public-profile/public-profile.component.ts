@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EMPTY, of, switchMap, tap, combineLatest } from 'rxjs';
+
 import { HotToastService } from '@ngneat/hot-toast';
 import { Firestore } from '@angular/fire/firestore';
-import { UserService } from '../../services/user.service';
-import { WorkExperienceService } from '../../services/work-experience.service';
-import { ActivatedRoute } from '@angular/router';
-import { EMPTY, switchMap, tap } from 'rxjs';
+
 import { User, WorkExperience } from '@models';
-import { snapshotChanges } from '@angular/fire/compat/database';
-import { QuerySnapshot } from '@firebase/firestore';
-import * as moment from 'moment';
+import { UserService, WorkExperienceService } from '@services';
 
 @Component({
   selector: 'app-public-profile',
   templateUrl: './public-profile.component.html',
   styleUrls: ['./public-profile.component.scss']
 })
+
 export class PublicProfileComponent implements OnInit {
 
   userInfo: User;
@@ -34,6 +33,7 @@ export class PublicProfileComponent implements OnInit {
     const loadingRef = this.toast.loading('Loading profile...');
 
     const username = this.activatedRoute.snapshot.params['username'];
+
     this.userService.getByUserName(username).pipe(
       switchMap((snapshot) => {
         this.userInfo = snapshot.docs[0]?.data() as User;
@@ -41,13 +41,14 @@ export class PublicProfileComponent implements OnInit {
         if(!this.userInfo || !this.userInfo.publicProfile) {
           return EMPTY;
         }
+        const workExperience$ = this.workExperienceService.getWorkExperiences(this.userInfo.uid);
 
-
-        return this.workExperienceService.getWorkExperiences(this.userInfo.uid);
+        return combineLatest([of(this.userInfo), workExperience$])
       }),
       tap({
-        next: (snapshot: QuerySnapshot) => {
-          this.workExperienceService.updateExperienceSource(snapshot)
+        next: ([userInfo, workExperience]) => {
+          this.userService.updateUserInfoSource(userInfo);
+          this.workExperienceService.updateExperienceSource(workExperience)
         },
         complete: () => {
           this.loading = false;

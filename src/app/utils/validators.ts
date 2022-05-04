@@ -23,3 +23,9 @@ export function dateValidator (startDate: string, endDate: string, currentRole: 
     return start.setErrors(null);
   };
 }
+
+export function validateImageFile(fileType) {
+  const pattern = /image\/*/;
+
+  return fileType.match(pattern);
+}
