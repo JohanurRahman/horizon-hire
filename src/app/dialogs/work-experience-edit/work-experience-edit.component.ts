@@ -150,6 +150,7 @@ export class WorkExperienceEditComponent implements OnInit {
     const workExperienceId = this.data.experience.id;
     const uid = this.data.uid;
 
+    // If company logo is a URL then just update the data
     if (!formData.companyLogo || typeof formData.companyLogo === 'string') {
       this.updateApiCall(formData, workExperienceId, uid).pipe(
         takeUntil(this.destroy$)
@@ -157,6 +158,7 @@ export class WorkExperienceEditComponent implements OnInit {
       return;
     }
 
+    // If company logo is a File Type then just upload the image first then update the data
     this.imageUploadService
       .uploadImage(formData.companyLogo, `images/company/${formData.companyLogo.name}`)
       .pipe(
