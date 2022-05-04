@@ -7,8 +7,8 @@
     </button>
   </div>
 
-  <div class="card__content">
-    <ng-container *ngIf="workExperiences && workExperiences.length; else noExperience">
+  <div class="card__content" *ngIf="!loading">
+    <ng-container *ngIf="workExperiences && workExperiences.length > 0; else noExperience">
       <div class="experience-entry-container" *ngFor="let item of workExperiences">
 
         <div class="flex gap-x-[20px]">

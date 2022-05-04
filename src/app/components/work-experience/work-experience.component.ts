@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { delay, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -25,6 +25,8 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
 
   workExperiences: WorkExperience[];
   userInfo: User;
+
+  loading = true;
 
   constructor(
     private dialog: MatDialog,
@@ -58,6 +60,10 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
     this.workExperienceService.currentWorkExperiences.pipe(
       tap((workExperiences: WorkExperience[]) => {
         this.workExperiences = workExperiences;
+      }),
+      delay(400),
+      tap(() => {
+        this.loading = false;
       }),
       takeUntil(this.destroy$)
     ).subscribe();
