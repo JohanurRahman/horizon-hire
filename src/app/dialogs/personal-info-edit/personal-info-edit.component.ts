@@ -84,9 +84,6 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     // If it's an url then only update profile
     if (!formData.profilePicture || typeof formData.profilePicture === 'string') {
       this.updateProfile(formData).pipe(
-        tap(() => {
-          this.dialogRef.close();
-        }),
         takeUntil(this.destroy$)
       ).subscribe();
       return;
@@ -105,9 +102,6 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
           const data = { ...formData, uid: this.userInfo.uid, profilePicture: url };
           return this.updateProfile(data);
         }),
-        tap(() => {
-          this.dialogRef.close();
-        }),
         takeUntil(this.destroy$)
       )
       .subscribe();
@@ -119,6 +113,9 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
         loading: 'Updating profile...',
         success: 'Profile updated successfully',
         error: 'There was an error while updating the profile',
+      }),
+      tap(() => {
+        this.dialogRef.close();
       }),
     );
   }
