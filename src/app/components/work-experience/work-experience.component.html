@@ -26,6 +26,10 @@
             <p class="duration">
               {{ item.startDate }} - {{ item.currentRole ? 'Present' :  item.endDate }}
             </p>
+            <p class="location" *ngIf="item.location">
+              {{ item.location }}
+            </p>
+
             <p class="description">
               {{ item.description }}
             </p>

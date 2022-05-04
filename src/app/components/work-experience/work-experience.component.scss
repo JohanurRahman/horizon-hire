@@ -23,7 +23,7 @@
     line-height: 24px;
   }
 
-  .company-name, .duration {
+  .company-name, .duration, .location {
     color: rgb(151, 151, 151);
     font-size: 14px;
     line-height: 18px;
@@ -34,10 +34,15 @@
   }
 
   .duration {
-    margin-bottom: 15px;
+    margin-bottom: 4px;
+  }
+  
+  .location {
+    margin-bottom: 0;
   }
 
   .description {
+    margin-top: 15px;
     color: rgb(94, 89, 94);
     font-size: 16px;
     font-weight: 400;
