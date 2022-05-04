@@ -1,21 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+
+import { HotToastService } from '@ngneat/hot-toast';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { validateImageFile } from '../../utils/function';
-import { HotToastService } from '@ngneat/hot-toast';
+import { ImageUploadService, WorkExperienceService } from '@services';
+import { dateValidator, MY_DATE_FORMATS, validateImageFile } from '@utils';
+
 import { WorkExperience } from '@models';
-import { ImageUploadService } from '../../services/image-upload.service';
-import { WorkExperienceService } from '../../services/work-experience.service';
-import { dateValidator } from '../../utils/validators';
-import { MY_DATE_FORMATS } from '../../utils/constants';
 
 @Component({
   selector: 'app-work-experience-edit',
@@ -111,15 +110,11 @@ export class WorkExperienceEditComponent implements OnInit {
     const workExperienceId = this.data.experience?.id;
 
     if (workExperienceId) {
-      // update
       this.updateWorkExperience(formData)
       return;
     }
 
     this.addWorkExperience(formData);
-    // add
-
-    console.log('WORK EXPERIENCE ID: ', this.data.experience?.id);
   }
 
   addWorkExperience(formData) {
@@ -148,7 +143,6 @@ export class WorkExperienceEditComponent implements OnInit {
   }
 
   updateWorkExperience(formData) {
-    console.log('FORM DATA: ', formData);
     if (!this.data.experience) {
       throw new Error('Work experience not found');
     }
