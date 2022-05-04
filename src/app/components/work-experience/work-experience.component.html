@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="editable">
 
   <div class="card__header">
     <h4>Experience</h4>
@@ -8,7 +8,7 @@
   </div>
 
   <div class="card__content">
-    <ng-container *ngIf="workExperiences">
+    <ng-container *ngIf="workExperiences && workExperiences.length; else noExperience">
       <div class="experience-entry-container" *ngFor="let item of workExperiences">
 
         <div class="flex gap-x-[20px]">
@@ -46,6 +46,14 @@
         </mat-menu>
       </div>
     </ng-container>
+
+    <ng-template #noExperience>
+      <div class="bg-[#ebf0f6] rounded py-8 px-12">
+        <p class="empty-text">
+          Add your work experience and highlight your achievements in this section.
+        </p>
+      </div>
+    </ng-template>
   </div>
 
 </div>
