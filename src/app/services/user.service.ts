@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, from, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, from, Observable, of, switchMap } from 'rxjs';
 import { collection, doc, docData, Firestore, getDocs, limit, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 
 import { AuthService } from './auth.service';
@@ -24,17 +24,14 @@ export class UserService {
     private workExperienceService: WorkExperienceService
   ) {}
 
-  get currentUserProfile$(): Observable<[DocumentData, QuerySnapshot<DocumentData>] | null> {
+  get currentUserProfile$(): Observable<DocumentData| null> {
     return this.authService.currentUser$.pipe(
       switchMap((user) => {
         if (!user?.uid) {
           return of(null);
         }
 
-        const user$ = docData(doc(this.firestore, 'users', user?.uid));
-        const workExperience$ = this.workExperienceService.getWorkExperiences(user.uid);
-
-        return combineLatest([user$, workExperience$]);
+        return docData(doc(this.firestore, 'users', user?.uid));
       })
     );
   }

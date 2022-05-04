@@ -1,4 +1,4 @@
-<div class="card" *ngIf="editable">
+<div class="card">
 
   <div class="card__header">
     <h4>Experience</h4>
@@ -50,7 +50,13 @@
     <ng-template #noExperience>
       <div class="bg-[#ebf0f6] rounded py-8 px-12">
         <p class="empty-text">
-          Add your work experience and highlight your achievements in this section.
+          <ng-container *ngIf="editable">
+            Add your work experience and highlight your achievements in this section.
+          </ng-container>
+
+          <ng-container *ngIf="!editable">
+            No experience found
+          </ng-container>
         </p>
       </div>
     </ng-template>

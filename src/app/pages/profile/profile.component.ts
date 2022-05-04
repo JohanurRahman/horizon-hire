@@ -5,7 +5,6 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Firestore } from '@angular/fire/firestore';
 
 import { UserService, WorkExperienceService } from '@services';
-import { QuerySnapshot } from '@firebase/firestore';
 import { DocumentData } from '@angular/fire/compat/firestore';
 import { User } from '@models';
 
@@ -35,9 +34,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         loading: 'Loading user information',
         error: ({ message }) => `${message}`
       }),
-      filter((response: [DocumentData, QuerySnapshot<DocumentData>] | null) => response !== null),
-      tap((response: [DocumentData, QuerySnapshot<DocumentData>] | null) => {
-        const [ user, workExperience] = response as [User, QuerySnapshot];
+      filter((response: DocumentData | null) => response !== null),
+      tap((response: DocumentData | null) => {
+        const user = response as User;
 
         if (!user) {
           throw new Error('No user found');
@@ -46,7 +45,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.loading = false;
 
         this.userService.updateUserInfoSource(user);
-        this.workExperienceService.updateExperienceSource(workExperience);
       }),
       takeUntil(this.destroy$)
     ).subscribe();

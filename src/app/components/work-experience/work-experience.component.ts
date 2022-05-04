@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,6 +8,8 @@ import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.c
 
 import { User, WorkExperience } from '@models';
 import { UserService, WorkExperienceService } from '@services';
+import { QuerySnapshot } from '@firebase/firestore';
+import { DocumentData } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-work-experience',
@@ -37,12 +39,16 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
 
   getCurrentUserInfo() {
     this.userService.currentUserInfoSource.pipe(
-      tap((user: User | null) => {
+      switchMap((user: User | null) => {
         if (!user) {
           throw new Error('User info not found');
         }
 
         this.userInfo = user;
+        return this.workExperienceService.getWorkExperiences(user.uid);
+      }),
+      tap((workExperience: QuerySnapshot<DocumentData>) => {
+        this.workExperienceService.updateExperienceSource(workExperience);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
