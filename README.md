@@ -1,27 +1,26 @@
-# HorizonHire
+# Horizon Hire
+## A simple job site with minimal feature
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
+### Built Using
 
-## Development server
+:white_check_mark: Angular  <br />
+:white_check_mark: TypeScript <br />
+:white_check_mark: Angular Material <br />
+:white_check_mark: Tailwind CSS <br />
+:white_check_mark: Firebase (Firestore Database) <br />
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Prerequisite for runnning locally
 
-## Code scaffolding
+`Node.js Version: ^12.20.2 || ^14.15.5 || ^16.10.0` [ [Download](https://nodejs.org/en/) ]
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Angular CLI is optional(good to have) <br />
+:point_right: [Angular CLI](https://angular.io/cli)
 
-## Build
+## Command for running development server locally
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## You can check the live site in the following link as well
+[Horizon Hire](https://whimsical-kulfi-46718d.netlify.app/)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
