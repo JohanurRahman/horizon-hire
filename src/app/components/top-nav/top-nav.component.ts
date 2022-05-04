@@ -1,8 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { HotToastService } from '@ngneat/hot-toast';
 import { Router } from '@angular/router';
+
+import { HotToastService } from '@ngneat/hot-toast';
+
+import { AuthService } from '../../services/auth.service';
+
 import { User } from '@models';
 
 @Component({
@@ -10,6 +13,7 @@ import { User } from '@models';
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.scss']
 })
+
 export class TopNavComponent implements OnDestroy {
 
   @Input() userInfo: User;
@@ -21,9 +25,6 @@ export class TopNavComponent implements OnDestroy {
     private authService: AuthService,
     private toast: HotToastService,
   ) { }
-
-  ngOnInit(): void {
-  }
 
   logout() {
     this.authService.logout().pipe(
