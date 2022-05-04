@@ -5,9 +5,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
 import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
-import { WorkExperienceService } from '../../services/work-experience.service';
 
 import { User, WorkExperience } from '@models';
+import { UserService, WorkExperienceService } from '@services';
 
 @Component({
   selector: 'app-work-experience',
@@ -17,22 +17,41 @@ import { User, WorkExperience } from '@models';
 
 export class WorkExperienceComponent implements OnInit, OnDestroy {
 
-  @Input() userInfo: User;
   @Input() editable = true;
 
   private destroy$ = new Subject<void>();
 
   workExperiences: WorkExperience[];
+  userInfo: User;
 
   workExperienceEditDialogRef: MatDialogRef<WorkExperienceEditComponent>;
   confirmationDialogRef: MatDialogRef<ConfirmationComponent>;
 
   constructor(
     private dialog: MatDialog,
+    private userService: UserService,
     private workExperienceService: WorkExperienceService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getCurrentUserInfo();
+    this.getCurrentWorkExperiences();
+  }
+
+  getCurrentUserInfo() {
+    this.userService.currentUserInfoSource.pipe(
+      tap((user: User | null) => {
+        if (!user) {
+          throw new Error('User info not found');
+        }
+
+        this.userInfo = user;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
+
+  getCurrentWorkExperiences() {
     this.workExperienceService.currentWorkExperiences.pipe(
       tap((workExperiences: WorkExperience[]) => {
         this.workExperiences = workExperiences;

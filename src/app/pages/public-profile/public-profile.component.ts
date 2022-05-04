@@ -42,6 +42,7 @@ export class PublicProfileComponent implements OnInit {
           return EMPTY;
         }
 
+
         return this.workExperienceService.getWorkExperiences(this.userInfo.uid);
       }),
       tap({

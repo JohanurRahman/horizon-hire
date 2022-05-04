@@ -1,15 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { HotToastService } from '@ngneat/hot-toast';
 
-import { UserService } from '../../services/user.service';
 import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
 
 import { User } from '@models';
+import { UserService } from '@services';
 
 @Component({
   selector: 'app-profile-privacy',
@@ -17,9 +17,9 @@ import { User } from '@models';
   styleUrls: ['./profile-privacy.component.scss']
 })
 
-export class ProfilePrivacyComponent {
+export class ProfilePrivacyComponent implements OnInit, OnDestroy {
 
-  @Input() userInfo: User;
+  userInfo: User;
 
   private destroy$ = new Subject<void>();
 
@@ -32,6 +32,23 @@ export class ProfilePrivacyComponent {
     private toast: HotToastService,
     private userService: UserService
   ) { }
+
+  ngOnInit() {
+    this.getCurrentUserInfo();
+  }
+
+  getCurrentUserInfo() {
+    this.userService.currentUserInfoSource.pipe(
+      tap((user: User | null) => {
+        if (!user) {
+          throw new Error('User info not found');
+        }
+
+        this.userInfo = user;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
 
   changeProfileVisibility(event: MatSlideToggleChange) {
     this.userService.updateUser({ uid: this.userInfo.uid, publicProfile: event.checked }).pipe(
@@ -51,5 +68,9 @@ export class ProfilePrivacyComponent {
       panelClass: 'dialog-edit',
       disableClose: true
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 }

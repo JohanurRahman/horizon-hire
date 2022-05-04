@@ -1,18 +1,15 @@
-<app-top-nav [userInfo]="userInfo"></app-top-nav>
+<ng-container *ngIf="userInfo">
+  <app-top-nav></app-top-nav>
 
-<div class="page-wrapper">
-  <div class="wrapper">
+  <div class="page-wrapper">
+    <div class="wrapper">
+      <app-personal-info></app-personal-info>
 
-    <ng-container *ngIf="userInfo">
-      <app-personal-info [userInfo]="userInfo"></app-personal-info>
+      <div class="mt-5 grid grid-cols-[400px_1fr] gap-x-5 ">
+        <app-profile-privacy></app-profile-privacy>
 
-      <div class="mt-5" style="display: grid; grid-template-columns: 400px 1fr; grid-column-gap: 20px">
-        <app-profile-privacy [userInfo]="userInfo"></app-profile-privacy>
-
-        <app-work-experience [userInfo]="userInfo"></app-work-experience>
+        <app-work-experience></app-work-experience>
       </div>
-
-    </ng-container>
-
+    </div>
   </div>
-</div>
+</ng-container>

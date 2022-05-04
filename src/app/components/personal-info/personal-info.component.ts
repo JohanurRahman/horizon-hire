@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil, tap } from 'rxjs';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -6,6 +7,7 @@ import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/pers
 import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
 
 import { User } from '@models';
+import { UserService } from '@services';
 
 @Component({
   selector: 'app-personal-info',
@@ -13,15 +15,39 @@ import { User } from '@models';
   styleUrls: ['./personal-info.component.scss']
 })
 
-export class PersonalInfoComponent {
+export class PersonalInfoComponent implements OnInit, OnDestroy {
 
-  @Input() userInfo: User;
   @Input() editable = true;
+
+  private destroy$ = new Subject<void>();
+
+  userInfo: User;
 
   personalInfoEditDialogRef: MatDialogRef<PersonalInfoEditComponent>;
   shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private userService: UserService
+  ) { }
+
+  ngOnInit() {
+    this.getCurrentUserInfo();
+  }
+
+  getCurrentUserInfo() {
+    this.userService.currentUserInfoSource.pipe(
+      tap((user: User | null) => {
+        if (!user) {
+          throw new Error('User info not found');
+        }
+
+        this.userInfo = user;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
+
 
   editPersonalInfo() {
     this.personalInfoEditDialogRef = this.dialog.open(PersonalInfoEditComponent, {
@@ -39,6 +65,10 @@ export class PersonalInfoComponent {
       panelClass: 'dialog-edit',
       disableClose: true
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 
 }
