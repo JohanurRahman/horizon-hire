@@ -12,7 +12,9 @@
   <div mat-dialog-content cdkScrollable>
 
     <div class="user-photo">
-      <img [src]="imgUrl ?? '/assets/images/profile/user-avatar.png'" alt=""/>
+      <img [src]="imgUrl ?? '/assets/images/profile/user-avatar.png'"
+           [alt]="data.firstName + ' ' + data.lastName"/>
+
       <button type="button" mat-mini-fab (click)="inputField.click()">
         <mat-icon>edit</mat-icon>
       </button>
@@ -58,8 +60,13 @@
   </div>
 
   <div mat-dialog-actions>
-    <button type="button" class="button button-secondary" (click)="closeDialog()">Cancel</button>
-    <button type="submit" class="button button-primary ml-5">Save</button>
+    <button type="button" class="button button-secondary"
+            (click)="closeDialog()">
+      Cancel
+    </button>
+    <button type="submit" class="button button-primary ml-5">
+      Save
+    </button>
   </div>
 
 </form>

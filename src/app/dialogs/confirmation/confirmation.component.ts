@@ -68,5 +68,5 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
   }
-  
+
 }

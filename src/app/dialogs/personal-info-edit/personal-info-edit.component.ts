@@ -32,7 +32,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private imageUploadService: ImageUploadService,
     private dialogRef: MatDialogRef<PersonalInfoEditComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: User,
+    @Inject(MAT_DIALOG_DATA) public data: User,
   ) { }
 
   ngOnInit(): void {
