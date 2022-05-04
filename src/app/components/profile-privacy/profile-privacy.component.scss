@@ -1,0 +1,9 @@
+.test-button {
+  padding: 3px 6px;
+  border-radius: 15px;
+  &:hover {
+    background-color: #fcfcfc;
+    border-color: #fcfcfc;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  }
+}

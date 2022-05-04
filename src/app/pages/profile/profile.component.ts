@@ -1,17 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { User, WorkExperience } from '@models';
-import { HotToastService } from '@ngneat/hot-toast';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
-import * as moment from 'moment';
-import { collection, Firestore, onSnapshot } from '@angular/fire/firestore';
+
+import { HotToastService } from '@ngneat/hot-toast';
+import { Firestore } from '@angular/fire/firestore';
+
+import { UserService } from '../../services/user.service';
 import { WorkExperienceService } from '../../services/work-experience.service';
+
+import { User } from '@models';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
+
 export class ProfileComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
