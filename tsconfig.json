@@ -21,7 +21,9 @@
     "target": "es2017",
     "module": "es2020",
     "paths": {
+      "@services": ["src/app/services/index.ts"],
       "@models": ["src/app/models/index.ts"],
+      "@utils": ["src/app/utils/index.ts"],
     },
     "lib": [
       "es2020",
