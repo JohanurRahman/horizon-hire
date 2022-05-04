@@ -3,9 +3,9 @@ import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
-
-import { WorkExperienceService } from '../../services/work-experience.service';
 import { QuerySnapshot } from '@firebase/firestore';
+
+import { WorkExperienceService } from '@services';
 
 interface ConfirmDialogData {
   id: string;

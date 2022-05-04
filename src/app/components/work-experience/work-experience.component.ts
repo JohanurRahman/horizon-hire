@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
 import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
@@ -23,9 +23,6 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
 
   workExperiences: WorkExperience[];
   userInfo: User;
-
-  workExperienceEditDialogRef: MatDialogRef<WorkExperienceEditComponent>;
-  confirmationDialogRef: MatDialogRef<ConfirmationComponent>;
 
   constructor(
     private dialog: MatDialog,
@@ -73,7 +70,8 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
       uid: this.userInfo.uid,
       experience
     }
-    this.workExperienceEditDialogRef = this.dialog.open(WorkExperienceEditComponent, {
+
+    this.dialog.open(WorkExperienceEditComponent, {
       data: data,
       width: '700px',
       panelClass: 'dialog-edit',
@@ -82,7 +80,7 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string) {
-    this.confirmationDialogRef = this.dialog.open(ConfirmationComponent, {
+    this.dialog.open(ConfirmationComponent, {
       data: { id, uid: this.userInfo.uid },
       width: '600px',
       panelClass: 'dialog-edit',

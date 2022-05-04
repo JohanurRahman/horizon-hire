@@ -23,9 +23,6 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
 
   userInfo: User;
 
-  personalInfoEditDialogRef: MatDialogRef<PersonalInfoEditComponent>;
-  shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;
-
   constructor(
     private dialog: MatDialog,
     private userService: UserService
@@ -50,8 +47,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
 
 
   editPersonalInfo() {
-    this.personalInfoEditDialogRef = this.dialog.open(PersonalInfoEditComponent, {
-      data: { ...this.userInfo },
+    this.dialog.open(PersonalInfoEditComponent, {
       width: '500px',
       panelClass: 'dialog-edit',
       disableClose: true
@@ -59,8 +55,7 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
   }
 
   shareProfile() {
-    this.shareProfileDialogRef = this.dialog.open(ShareProfileComponent, {
-      data: { ...this.userInfo },
+    this.dialog.open(ShareProfileComponent, {
       width: '800px',
       panelClass: 'dialog-edit',
       disableClose: true

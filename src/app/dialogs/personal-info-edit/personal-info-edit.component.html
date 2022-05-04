@@ -13,7 +13,7 @@
 
     <div class="user-photo">
       <img [src]="imgUrl ?? '/assets/images/profile/user-avatar.png'"
-           [alt]="data.firstName + ' ' + data.lastName"/>
+           [alt]="userInfo.firstName + ' ' + userInfo.lastName"/>
 
       <button type="button" mat-mini-fab (click)="inputField.click()">
         <mat-icon>edit</mat-icon>

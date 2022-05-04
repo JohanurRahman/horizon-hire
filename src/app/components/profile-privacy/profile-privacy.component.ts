@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { HotToastService } from '@ngneat/hot-toast';
 
@@ -19,12 +19,9 @@ import { UserService } from '@services';
 
 export class ProfilePrivacyComponent implements OnInit, OnDestroy {
 
-  userInfo: User;
-
   private destroy$ = new Subject<void>();
 
-  shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;
-
+  userInfo: User;
   tooltipContent = 'Enabling this will create a public URL of your profile';
 
   constructor(
@@ -62,8 +59,7 @@ export class ProfilePrivacyComponent implements OnInit, OnDestroy {
   }
 
   openShareProfileDialog() {
-    this.shareProfileDialogRef = this.dialog.open(ShareProfileComponent, {
-      data: { ...this.userInfo },
+    this.dialog.open(ShareProfileComponent, {
       width: '800px',
       panelClass: 'dialog-edit',
       disableClose: true

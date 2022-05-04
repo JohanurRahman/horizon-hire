@@ -1,14 +1,13 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 
+import { MatDialogRef } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
 
 import { User } from '@models';
-import { UserService } from '../../services/user.service';
-import { ImageUploadService } from '../../services/image-upload.service';
-import { validateImageFile } from '../../utils/function';
+import { validateImageFile } from '@utils';
+import { UserService, ImageUploadService } from '@services';
 
 @Component({
   selector: 'app-personal-info-edit',
@@ -18,13 +17,13 @@ import { validateImageFile } from '../../utils/function';
 
 export class PersonalInfoEditComponent implements OnInit, OnDestroy {
 
-  personalInfoForm: FormGroup;
-
-  submitting = false;
-
   private destroy$ = new Subject<void>();
 
+  personalInfoForm: FormGroup;
+
+  userInfo: User;
   imgUrl: string | ArrayBuffer | null;
+  submitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -32,21 +31,35 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private imageUploadService: ImageUploadService,
     private dialogRef: MatDialogRef<PersonalInfoEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User,
   ) { }
 
   ngOnInit(): void {
-    this.imgUrl = this.data?.profilePicture || null;
+    this.getCurrentUserInfo();
+  }
 
+  getCurrentUserInfo() {
+    this.userService.currentUserInfoSource.pipe(
+      tap((user: User | null) => {
+        if (!user) {
+          throw new Error('User info not found');
+        }
+
+        this.userInfo = user;
+        this.imgUrl = this.userInfo?.profilePicture || null;
+        this.initializeForm();
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe();
+  }
+
+  initializeForm() {
     this.personalInfoForm = this.fb.group({
-      profilePicture: [ this.data?.profilePicture || null ],
-      firstName: [ this.data?.firstName || null, Validators.required],
-      lastName: [ this.data?.lastName || null, Validators.required],
-      title: [ this.data?.title || null ],
-      age: [ this.data?.age || null, Validators.required]
+      profilePicture: [ this.userInfo?.profilePicture || null ],
+      firstName: [ this.userInfo?.firstName || null, Validators.required],
+      lastName: [ this.userInfo?.lastName || null, Validators.required],
+      title: [ this.userInfo?.title || null ],
+      age: [ this.userInfo?.age || null, Validators.required]
     })
-
-    this.dialogRef.disableClose = true;
   }
 
   closeDialog() {
@@ -65,7 +78,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
 
     const formData = {
       ...this.personalInfoForm.getRawValue(),
-      uid: this.data.uid
+      uid: this.userInfo.uid
     };
 
     // If it's an url then only update profile
@@ -79,9 +92,9 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // if profilePicture type if File then upload image
+    // if profilePicture type is file then upload image
     this.imageUploadService
-      .uploadImage(formData.profilePicture, `images/profile/${this.data.uid}`)
+      .uploadImage(formData.profilePicture, `images/profile/${this.userInfo.uid}`)
       .pipe(
         this.toast.observe({
           loading: 'Uploading profile image...',
@@ -89,7 +102,7 @@ export class PersonalInfoEditComponent implements OnInit, OnDestroy {
           error: 'There was an error in uploading the image',
         }),
         switchMap((url) => {
-          const data = { ...formData, uid: this.data.uid, profilePicture: url };
+          const data = { ...formData, uid: this.userInfo.uid, profilePicture: url };
           return this.updateProfile(data);
         }),
         tap(() => {

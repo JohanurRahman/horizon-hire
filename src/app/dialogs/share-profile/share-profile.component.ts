@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EMPTY, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -8,7 +8,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 import { UserService } from '@services';
 import { User } from '@models';
-
 
 @Component({
   selector: 'app-share-profile',
