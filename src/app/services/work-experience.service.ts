@@ -3,7 +3,8 @@ import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, updateDoc } fro
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { User, WorkExperience } from '@models';
 import * as moment from 'moment';
-import { QuerySnapshot } from '@firebase/firestore';
+import { DocumentReference, QuerySnapshot } from '@firebase/firestore';
+import { DocumentData } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,10 @@ export class WorkExperienceService {
   ) {}
 
 
-  updateExperienceSource(workExperiences) {
+  updateExperienceSource(workExperiences: QuerySnapshot<DocumentData>) {
     const data: WorkExperience[] = [];
     workExperiences.forEach((doc) => {
-      data.push({ ...doc.data(), id: doc.id  })
+      data.push({ ...doc.data(), id: doc.id  } as WorkExperience)
     })
 
     data.sort((a, b) => {
@@ -30,12 +31,12 @@ export class WorkExperienceService {
     this.workExperiencesSource.next(data)
   }
 
-  addExperience(experience: any, uid: string): Observable<any> {
+  addExperience(experience: any, uid: string): Observable<DocumentReference> {
     const userSubCollection = collection(this.firestore, `users/${uid}/work-experience`);
     return from(addDoc(userSubCollection, experience));
   }
 
-  updateExperience(experience: any, id: string, uid: string): Observable<any> {
+  updateExperience(experience: any, id: string, uid: string): Observable<void> {
     const ref = collection(this.firestore, `users/${uid}/work-experience`);
     const document = doc(ref, id);
     return from(updateDoc(document, { ...experience }));

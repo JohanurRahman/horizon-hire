@@ -70,10 +70,6 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-  }
-
   editLink() {
     this.editingLink = !this.editingLink;
   }
@@ -111,6 +107,10 @@ export class ShareProfileComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe()
-
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
+
 }

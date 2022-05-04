@@ -1,23 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, from, Observable, of, switchMap } from 'rxjs';
-import {
-  collection,
-  doc,
-  docData,
-  Firestore,
-  getDoc,
-  getDocs, limit,
-  query,
-  setDoc,
-  updateDoc,
-  where
-} from '@angular/fire/firestore';
+import { collection, doc, docData, Firestore, getDocs, limit, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 
-import { User, WorkExperience } from '@models';
 import { AuthService } from './auth.service';
 import { WorkExperienceService } from './work-experience.service';
-import * as moment from 'moment';
 import { QuerySnapshot } from '@firebase/firestore';
+
+import { User } from '@models';
+import { DocumentData } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +24,7 @@ export class UserService {
     private workExperienceService: WorkExperienceService
   ) {}
 
-  get currentUserProfile$(): Observable<any> {
+  get currentUserProfile$(): Observable<[DocumentData, QuerySnapshot<DocumentData>] | null> {
     return this.authService.currentUser$.pipe(
       switchMap((user) => {
         if (!user?.uid) {
