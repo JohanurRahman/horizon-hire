@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { HotToastService } from '@ngneat/hot-toast';
+
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
-import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+
 import { User } from '@models';
 
 @Component({
