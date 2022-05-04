@@ -1,15 +1,23 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '@models';
-import { HotToastService } from '@ngneat/hot-toast';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
+
 import { WorkExperienceService } from '../../services/work-experience.service';
+import { QuerySnapshot } from '@firebase/firestore';
+
+interface ConfirmDialogData {
+  id: string;
+  uid: string;
+}
 
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.scss']
 })
+
 export class ConfirmationComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
@@ -20,10 +28,10 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
     private toast: HotToastService,
     private workExperienceService: WorkExperienceService,
     private dialogRef: MatDialogRef<ConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: { id: string, uid: string },
+    @Inject(MAT_DIALOG_DATA) private data: ConfirmDialogData,
     ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.dialogRef.disableClose = true;
   }
 
@@ -45,7 +53,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
         return this.workExperienceService.getWorkExperiences(uid);
       }),
       tap({
-        next: (response) => {
+        next: (response: QuerySnapshot) => {
           this.workExperienceService.updateExperienceSource(response);
           this.dialogRef.close();
         },
@@ -60,4 +68,5 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
   }
+  
 }

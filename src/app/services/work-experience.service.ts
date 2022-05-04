@@ -41,7 +41,7 @@ export class WorkExperienceService {
     return from(updateDoc(document, { ...experience }));
   }
 
-  getWorkExperiences(uId: string) {
+  getWorkExperiences(uId: string): Observable<QuerySnapshot> {
     return from(getDocs(collection(this.firestore, `users/${uId}/work-experience`)))
   }
 
