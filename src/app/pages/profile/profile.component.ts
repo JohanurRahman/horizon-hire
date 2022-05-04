@@ -4,10 +4,7 @@ import { filter, Subject, takeUntil, tap } from 'rxjs';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Firestore } from '@angular/fire/firestore';
 
-import { UserService } from '../../services/user.service';
-import { WorkExperienceService } from '../../services/work-experience.service';
-
-import { User } from '@models';
+import { UserService, WorkExperienceService } from '@services';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +16,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  userInfo: User;
+  loading = true;
 
   constructor(
     private toast: HotToastService,
@@ -41,9 +38,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
           throw new Error('No user found');
         }
 
-        this.userInfo = user;
-        this.userService.updateUserInfoSource(user);
+        this.loading = false;
 
+        this.userService.updateUserInfoSource(user);
         this.workExperienceService.updateExperienceSource(workExperience);
       }),
       takeUntil(this.destroy$)
