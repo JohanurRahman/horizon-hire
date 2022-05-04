@@ -151,19 +151,7 @@ export class WorkExperienceEditComponent implements OnInit {
     const uid = this.data.uid;
 
     if (!formData.companyLogo || typeof formData.companyLogo === 'string') {
-      this.workExperienceService.updateExperience(formData, workExperienceId, uid).pipe(
-        this.toast.observe({
-          loading: 'Updating work experience',
-          success: 'Work experience updated successfully',
-          error: 'There was an error while updating work experience',
-        }),
-        switchMap(() => {
-          return this.workExperienceService.getWorkExperiences(uid);
-        }),
-        tap((response) => {
-          this.workExperienceService.updateExperienceSource(response);
-          this.dialogRef.close();
-        }),
+      this.updateApiCall(formData, workExperienceId, uid).pipe(
         takeUntil(this.destroy$)
       ).subscribe()
       return;
@@ -173,24 +161,33 @@ export class WorkExperienceEditComponent implements OnInit {
       .uploadImage(formData.companyLogo, `images/company/${formData.companyLogo.name}`)
       .pipe(
         this.toast.observe({
-          loading: 'Updating experience',
-          success: 'Experience Updating successfully',
-          error: 'There was an error while Updating experience',
+          loading: 'Updating company logo ',
+          success: 'Company Logo Updated successfully',
+          error: 'There was an error while updating company logo',
         }),
         switchMap((url) => {
           const data = { ...formData, companyLogo: url };
-          return this.workExperienceService.updateExperience(data, workExperienceId, uid);
-        }),
-        switchMap(() => {
-          return this.workExperienceService.getWorkExperiences(this.data.uid);
-        }),
-        tap((response) => {
-          this.workExperienceService.updateExperienceSource(response);
-          this.dialogRef.close();
+          return this.updateApiCall(data, workExperienceId, uid);
         }),
         takeUntil(this.destroy$)
-      )
-      .subscribe();
+      ).subscribe();
+  }
+
+  updateApiCall(formData, workExperienceId, uid) {
+    return this.workExperienceService.updateExperience(formData, workExperienceId, uid).pipe(
+      this.toast.observe({
+        loading: 'Updating work experience',
+        success: 'Work experience updated successfully',
+        error: 'There was an error while updating work experience',
+      }),
+      switchMap(() => {
+        return this.workExperienceService.getWorkExperiences(uid);
+      }),
+      tap((response) => {
+        this.workExperienceService.updateExperienceSource(response);
+        this.dialogRef.close();
+      })
+    )
   }
 
   constructFormData(formData) {
