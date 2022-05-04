@@ -1,18 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { UserService } from '../../services/user.service';
-import { User } from '@models';
-import { HotToastService } from '@ngneat/hot-toast';
+import { Component, Input } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
+
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+import { HotToastService } from '@ngneat/hot-toast';
+
+import { UserService } from '../../services/user.service';
+import { ShareProfileComponent } from '../../dialogs/share-profile/share-profile.component';
+
+import { User } from '@models';
 
 @Component({
   selector: 'app-profile-privacy',
   templateUrl: './profile-privacy.component.html',
   styleUrls: ['./profile-privacy.component.scss']
 })
-export class ProfilePrivacyComponent implements OnInit {
+
+export class ProfilePrivacyComponent {
 
   @Input() userInfo: User;
 
@@ -20,14 +25,13 @@ export class ProfilePrivacyComponent implements OnInit {
 
   shareProfileDialogRef: MatDialogRef<ShareProfileComponent>;
 
+  tooltipContent = 'Enabling this will create a public URL of your profile';
+
   constructor(
     private dialog: MatDialog,
     private toast: HotToastService,
     private userService: UserService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   changeProfileVisibility(event: MatSlideToggleChange) {
     this.userService.updateUser({ uid: this.userInfo.uid, publicProfile: event.checked }).pipe(

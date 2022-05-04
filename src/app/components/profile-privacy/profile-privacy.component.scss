@@ -1,9 +1,23 @@
-.test-button {
-  padding: 3px 6px;
-  border-radius: 15px;
-  &:hover {
-    background-color: #fcfcfc;
-    border-color: #fcfcfc;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+.profile-privacy-container {
+  .title {
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 0;
+  }
+
+  .info {
+    margin-bottom: 0;
+    margin-right: 10px;
+    font-size: 16px;
+    color: rgb(94, 89, 94);
+  }
+
+  .icon {
+    font-size: 20px;
+    color: rgb(94, 89, 94);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
   }
 }
+
