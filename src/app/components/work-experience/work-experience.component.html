@@ -12,19 +12,27 @@
       <div class="experience-entry-container" *ngFor="let item of workExperiences">
 
         <div class="flex gap-x-[20px]">
-          <img class="company-logo" [src]="item.companyLogo ?? '/assets/images/company/company.png'" [alt]="item.companyName">
+          <img class="company-logo"
+               [src]="item.companyLogo ?? '/assets/images/company/company.png'"
+               [alt]="item.companyName">
 
           <div>
-            <p class="title"> {{ item.title }} </p>
-            <p class="company-name"> {{ item.companyName }} </p>
-            <p class="duration" style="">
+            <p class="title">
+              {{ item.title }}
+            </p>
+            <p class="company-name">
+              {{ item.companyName }}
+            </p>
+            <p class="duration">
               {{ item.startDate }} - {{ item.currentRole ? 'Present' :  item.endDate }}
             </p>
-            <p class="description"> {{ item.description }} </p>
+            <p class="description">
+              {{ item.description }}
+            </p>
           </div>
         </div>
 
-        <button *ngIf="editable" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button *ngIf="editable" mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
 

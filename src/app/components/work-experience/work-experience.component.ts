@@ -1,12 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PersonalInfoEditComponent } from '../../dialogs/personal-info-edit/personal-info-edit.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
-import { User, WorkExperience } from '@models';
-import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
-import * as stream from 'stream';
-import { WorkExperienceService } from '../../services/work-experience.service';
 import { Subject, takeUntil, tap } from 'rxjs';
+
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+import { WorkExperienceEditComponent } from '../../dialogs/work-experience-edit/work-experience-edit.component';
+import { ConfirmationComponent } from '../../dialogs/confirmation/confirmation.component';
+import { WorkExperienceService } from '../../services/work-experience.service';
+
+import { User, WorkExperience } from '@models';
 
 @Component({
   selector: 'app-work-experience',
@@ -34,7 +35,6 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.workExperienceService.currentWorkExperiences.pipe(
       tap((workExperiences: WorkExperience[]) => {
-        console.log('WORK: ', workExperiences);
         this.workExperiences = workExperiences;
       }),
       takeUntil(this.destroy$)
@@ -66,7 +66,8 @@ export class WorkExperienceComponent implements OnInit, OnDestroy {
     this.confirmationDialogRef = this.dialog.open(ConfirmationComponent, {
       data: { id, uid: this.userInfo.uid },
       width: '600px',
-      panelClass: 'dialog-edit'
+      panelClass: 'dialog-edit',
+      disableClose: true
     });
   }
 
