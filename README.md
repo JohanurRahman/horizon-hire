@@ -21,6 +21,3 @@ Angular CLI is optional(good to have) <br />
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 
-## You can check the live site in the following link as well
-[Horizon Hire](https://whimsical-kulfi-46718d.netlify.app/)
-
